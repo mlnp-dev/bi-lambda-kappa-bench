@@ -16,6 +16,7 @@ class Settings:
     pg_schema: str
     kafka_bootstrap: str
     topic: str
+    lambda_block: int = 1000   # bloque de offsets de la speed layer; fijo durante la vida del topic
 
     @property
     def dsn(self) -> str:
@@ -37,4 +38,5 @@ def settings() -> Settings:
         pg_schema=e.get("PG_SCHEMA", "public"),
         kafka_bootstrap=e.get("KAFKA_BOOTSTRAP", "localhost:19092"),
         topic=e.get("TOPIC", "marcaciones"),
+        lambda_block=int(e.get("LAMBDA_BLOCK_SIZE", "1000")),
     )

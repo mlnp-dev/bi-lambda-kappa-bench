@@ -72,6 +72,13 @@ CREATE TABLE speed_view (
     PRIMARY KEY (sede_id, bucket, kafka_partition, offset_block)
 );
 
+-- event_id ya contados por la speed layer (deduplicación); se purga junto con speed_view.
+CREATE TABLE speed_seen (
+    event_id         uuid     PRIMARY KEY,
+    kafka_partition  smallint NOT NULL,
+    offset_block     bigint   NOT NULL
+);
+
 -- Serving: batch + speed en cada consulta.
 CREATE VIEW lambda_serving AS
 SELECT sede_id, bucket, sum(marcaciones)::bigint AS marcaciones, sum(tardanzas)::bigint AS tardanzas

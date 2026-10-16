@@ -9,7 +9,9 @@
     python tasks.py produce  envía data/marcaciones.csv al topic (args extra: --limit N --rate EV/S)
     python tasks.py kappa    procesador Kappa continuo sobre la versión activa (Ctrl+C para parar)
     python tasks.py replay   reproceso Kappa: replay desde el offset 0 a v(N+1) y promoción
-    python tasks.py verify   comprueba que las vistas Kappa cuadran con el CSV anonimizado
+    python tasks.py lambda   master sink + speed layer en paralelo (args extra: --until-caught-up)
+    python tasks.py batch    batch layer Lambda: recálculo completo A/B (args extra: --every SEG)
+    python tasks.py verify   comprueba que las vistas Kappa y Lambda cuadran con master_events y el CSV
 """
 
 from __future__ import annotations
@@ -84,7 +86,7 @@ def check() -> None:
     from confluent_kafka.admin import AdminClient
 
     esperadas = {"sedes", "consumer_offsets", "master_events", "kappa_view_v1", "batch_view_a",
-                 "batch_view_b", "speed_view", "lambda_cutoff", "kappa_serving", "batch_active",
+                 "batch_view_b", "speed_view", "speed_seen", "lambda_cutoff", "kappa_serving", "batch_active",
                  "lambda_serving"}
     with psycopg.connect(dsn()) as conn:
         nombres = {r[0] for r in conn.execute(
@@ -114,26 +116,49 @@ def replay(*args: str) -> None:
     py("lkbench.kappa_arch.promote", *args)
 
 
-def verify() -> None:
-    from lkbench import db
-    from lkbench.config import settings
-    from lkbench.consistency import compare
-    from lkbench.events import aggregate
-    from lkbench.kappa_arch.processor import active_version, latest_version, view_table
-    from lkbench.producer import DEFAULT_CSV, read_csv
-
-    expected = aggregate(read_csv(ROOT / DEFAULT_CSV))
-    with db.connect(settings()) as conn:
-        print(f"kappa_serving -> {view_table(active_version(conn))}")
-        diffs = [compare(conn, r, expected)
-                 for r in ["kappa_serving"] + [view_table(v) for v in range(1, latest_version(conn) + 1)]]
-    for d in diffs:
-        print(d)
-    if not all(d.ok for d in diffs):
+def lambda_(*args: str) -> None:
+    env = {**os.environ, "PYTHONUTF8": "1", "PYTHONPATH": str(SRC)}
+    procs = [subprocess.Popen([sys.executable, "-m", f"lkbench.lambda_arch.{m}", *args], cwd=ROOT, env=env)
+             for m in ("master_sink", "speed_layer")]
+    try:
+        codes = [p.wait() for p in procs]
+    except KeyboardInterrupt:
+        codes = [p.wait() for p in procs]   # cada proceso recibe Ctrl+C y cierra su lote
+    if any(codes):
         sys.exit(1)
 
 
-TASKS = {f.__name__: f for f in (up, down, reset, anon, seed, check, produce, kappa, replay, verify)}
+lambda_.__name__ = "lambda"
+
+
+def batch(*args: str) -> None:
+    py("lkbench.lambda_arch.batch_layer", *args)
+
+
+def verify() -> None:
+    from lkbench import db
+    from lkbench.config import settings
+    from lkbench.consistency import compare, master_reference
+    from lkbench.events import aggregate
+    from lkbench.kappa_arch.processor import active_version, latest_version, view_table
+    from lkbench.lambda_arch.batch_layer import active_table
+    from lkbench.producer import DEFAULT_CSV, read_csv
+
+    csv_ref = aggregate(read_csv(ROOT / DEFAULT_CSV))
+    with db.connect(settings()) as conn:
+        master = master_reference(conn)
+        print(f"kappa_serving -> {view_table(active_version(conn))}; batch_active -> {active_table(conn)}")
+        print(f"master_events vs CSV: {'OK' if master == csv_ref else 'DIFERENTE'}")
+        kappas = ["kappa_serving"] + [view_table(v) for v in range(1, latest_version(conn) + 1)]
+        diffs = [compare(conn, r, master) for r in kappas + ["lambda_serving"]]
+    for d in diffs:
+        print(d)
+    if master != csv_ref or not all(d.ok for d in diffs):
+        sys.exit(1)
+
+
+TASKS = {f.__name__: f for f in (up, down, reset, anon, seed, check, produce, kappa, replay, lambda_, batch,
+                                  verify)}
 
 if __name__ == "__main__":
     if len(sys.argv) < 2 or sys.argv[1] not in TASKS:
