@@ -24,7 +24,7 @@ import openpyxl
 ROOT = Path(__file__).resolve().parents[1]
 NS = uuid.UUID("6f1c2a52-3b7e-4d3a-9a51-6d0b6c1f0e01")  # espacio fijo para uuid5
 TARDANZA_DESDE = dt.time(8, 0)  # supuesto: entrada posterior a las 08:00 = tardanza
-FECHA_MIN, FECHA_MAX = dt.date(2019, 1, 1), dt.date(2019, 12, 31)  # alcance del estudio: año 2019
+FECHA_MIN, FECHA_MAX = dt.date(2019, 1, 1), dt.date(2021, 12, 31)  # alcance del estudio: 2019-2021
 TZ = dt.timezone(dt.timedelta(hours=-5))  # hora de Perú, sin horario de verano
 
 # Posición de columnas en las hojas ASISTENCIA* (fila 1 = cabecera)
@@ -104,7 +104,7 @@ def main(xlsx: Path) -> None:
                 continue
             stats["filas"] += 1
             fecha = r[C_FECHA].date()
-            # solo 2019 (también descarta la hoja plantilla con fechas de 2026)
+            # solo 2019-2021 (también descarta la hoja plantilla con fechas de 2026)
             if not (FECHA_MIN <= fecha <= FECHA_MAX):
                 stats["fuera_rango"] += 1
                 continue
