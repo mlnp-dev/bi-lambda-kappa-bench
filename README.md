@@ -6,7 +6,7 @@ Distrito Fiscal de Puno (2019 a junio de 2021: 218 841 eventos, 460 personas, 16
 
 Business Intelligence, maestría (FINESI). Actividad N° 1: Arquitecturas.
 
-> Estado: fase 2 (Kappa) terminada. Lambda, APIs, benchmark e informe se agregan en las fases siguientes.
+> Estado: fases 2 (Kappa) y 3 (Lambda) terminadas. APIs, benchmark e informe se agregan en las fases siguientes.
 
 ## Stack
 
@@ -30,6 +30,25 @@ data/marcaciones.csv ──producer──▶ Redpanda "marcaciones" (3 particion
 - **Reproceso:** `replay` crea una versión nueva con su propio consumidor, lee el topic desde el
   offset 0 y, al alcanzar el final, cambia `kappa_serving` con `CREATE OR REPLACE VIEW`.
 
+## Arquitectura (Lambda)
+
+```
+Redpanda ──master sink──▶ master_events (solo inserción, event_id único, partición + offset)
+    │                          │
+    │                     batch layer: recálculo completo hasta el cutoff ──▶ batch_view_a / _b
+    │                                                                              │ (batch_active)
+    └──speed layer (offsets >= cutoff, por bloques) ──▶ speed_view                 │
+                                                          └──── lambda_serving = batch + speed
+```
+
+- **Batch:** el cutoff es el offset confirmado por el master sink, alineado al bloque de la speed
+  layer (`LAMBDA_BLOCK_SIZE`). Recalcula en la tabla inactiva y, en una sola transacción, mueve el
+  cutoff, purga la speed layer por debajo de él y cambia `batch_active` (A/B).
+- **Speed:** cuenta un evento solo si su offset es >= cutoff, el batch no lo contó ya y la propia
+  speed layer no lo vio antes (`speed_seen`), así que los reenvíos no inflan el resultado.
+- **Coordinación:** cada lote de la speed layer toma un bloqueo compartido sobre `lambda_cutoff`;
+  el batch no puede purgar un lote a medio confirmar (hay un test que fuerza esa carrera).
+
 ## Cómo levantarlo
 
 ```bash
@@ -47,6 +66,14 @@ python tasks.py produce                   # envía las 218 841 marcaciones al to
 python tasks.py kappa --until-caught-up   # procesa el backlog (sin la opción: modo continuo)
 python tasks.py verify                    # las vistas deben cuadrar exactamente con el CSV
 python tasks.py replay                    # replay completo a v(N+1) y promoción
+```
+
+## Lambda
+
+```bash
+python tasks.py lambda --until-caught-up  # master sink + speed layer en paralelo
+python tasks.py batch                     # recálculo batch A/B (--every 60 para repetirlo)
+python tasks.py verify                    # Kappa y Lambda deben cuadrar con master_events y el CSV
 ```
 
 ## Tests
