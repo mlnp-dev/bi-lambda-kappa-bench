@@ -11,6 +11,7 @@
     python tasks.py replay   reproceso Kappa: replay desde el offset 0 a v(N+1) y promoción
     python tasks.py lambda   master sink + speed layer en paralelo (args extra: --until-caught-up)
     python tasks.py batch    batch layer Lambda: recálculo completo A/B (args extra: --every SEG)
+    python tasks.py api      construye y levanta api-rest (:8000/docs) y api-graphql (:8001/graphql)
     python tasks.py verify   comprueba que las vistas Kappa y Lambda cuadran con master_events y el CSV
 """
 
@@ -135,6 +136,12 @@ def batch(*args: str) -> None:
     py("lkbench.lambda_arch.batch_layer", *args)
 
 
+def api() -> None:
+    sh("docker", "compose", "up", "-d", "--build", "--wait", "api-rest", "api-graphql")
+    print("REST:    http://localhost:8000/docs")
+    print("GraphQL: http://localhost:8001/graphql")
+
+
 def verify() -> None:
     from lkbench import db
     from lkbench.config import settings
@@ -158,7 +165,7 @@ def verify() -> None:
 
 
 TASKS = {f.__name__: f for f in (up, down, reset, anon, seed, check, produce, kappa, replay, lambda_, batch,
-                                  verify)}
+                                  api, verify)}
 
 if __name__ == "__main__":
     if len(sys.argv) < 2 or sys.argv[1] not in TASKS:

@@ -4,17 +4,21 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "lkbench"
-version = "0.1.0"
+version = "0.4.0"
 description = "Benchmark Lambda vs Kappa y REST vs GraphQL sobre marcaciones de asistencia anonimizadas"
 requires-python = ">=3.11"
 dependencies = [
     "psycopg[binary]>=3.2",
     "confluent-kafka>=2.5",
     "openpyxl>=3.0",
+    "fastapi>=0.115",
+    "uvicorn>=0.30",
+    "strawberry-graphql>=0.240",
+    "psycopg-pool>=3.2",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "ruff>=0.5"]
+dev = ["pytest>=8", "ruff>=0.5", "httpx>=0.27"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

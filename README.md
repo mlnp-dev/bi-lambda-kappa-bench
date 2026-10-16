@@ -6,7 +6,7 @@ Distrito Fiscal de Puno (2019 a junio de 2021: 218 841 eventos, 460 personas, 16
 
 Business Intelligence, maestría (FINESI). Actividad N° 1: Arquitecturas.
 
-> Estado: fases 2 (Kappa) y 3 (Lambda) terminadas. APIs, benchmark e informe se agregan en las fases siguientes.
+> Estado: ingesta Kappa y Lambda y APIs REST y GraphQL terminadas. El benchmark y el informe se agregan en las fases siguientes.
 
 ## Stack
 
@@ -75,6 +75,41 @@ python tasks.py lambda --until-caught-up  # master sink + speed layer en paralel
 python tasks.py batch                     # recálculo batch A/B (--every 60 para repetirlo)
 python tasks.py verify                    # Kappa y Lambda deben cuadrar con master_events y el CSV
 ```
+
+## APIs
+
+```bash
+python tasks.py api        # construye la imagen y levanta api-rest y api-graphql (1 worker cada una)
+```
+
+- REST (FastAPI): http://localhost:8000/docs
+- GraphQL (Strawberry): http://localhost:8001/graphql (GraphiQL)
+
+Las dos comparten `src/lkbench/api/repository.py` (mismas consultas SQL parametrizadas); solo
+cambia la capa de API. `arch` solo acepta `lambda` (vista `lambda_serving`) o `kappa`
+(`kappa_serving`).
+
+| Operación | REST | GraphQL |
+|---|---|---|
+| Serie por hora | `GET /api/v1/sedes/{id}/hourly?from=&to=&arch=` | `{ hourly(sedeId, from, to, arch) { bucket marcaciones tardanzas } }` |
+| Ranking | `GET /api/v1/top-sedes?limit=&arch=` | `{ topSedes(limit, arch) { sedeId nombre marcaciones tardanzas } }` |
+| Resumen | `GET /api/v1/sedes/{id}/summary?arch=` | `{ summary(sedeId, arch) { marcaciones tardanzas tasaTardanza horas desde hasta } }` |
+| Ingesta | `POST /api/v1/events` → 202 | `mutation { ingestEvents(events: [...]) }` |
+| Salud | `GET /health` | `GET /health` |
+
+Ejemplos:
+
+```bash
+curl "http://localhost:8000/api/v1/top-sedes?limit=3&arch=kappa"
+curl -X POST http://localhost:8001/graphql -H "Content-Type: application/json"      -d '{"query":"{ topSedes(limit: 3, arch: KAPPA) { nombre marcaciones tardanzas } }"}'
+```
+
+Fechas sin zona horaria en `from`/`to` se interpretan en hora de Perú (-05:00). La ingesta
+responde cuando Redpanda confirmó la escritura (aún no procesada por Kappa/Lambda); si
+`produced_at` es 0, la API pone la hora actual.
+
+Los procesadores también pueden correr como contenedores en modo continuo:
+`docker compose --profile stream up -d` (kappa, lambda-master, lambda-speed, lambda-batch).
 
 ## Tests
 
