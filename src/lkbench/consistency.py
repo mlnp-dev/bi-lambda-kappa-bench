@@ -1,7 +1,6 @@
 """Verificación de consistencia: una vista agregada debe cuadrar exactamente con la referencia.
 
-En la fase Kappa la referencia es el CSV anonimizado (deduplicado por event_id); con Lambda
-será master_events.
+Referencias: master_events (fuente de verdad de Lambda) y el CSV anonimizado deduplicado.
 """
 
 from __future__ import annotations
@@ -32,6 +31,13 @@ class Diff:
 
 def read_view(conn: psycopg.Connection, relation: str) -> Agg:
     q = sql.SQL("SELECT sede_id, bucket, marcaciones, tardanzas FROM {}").format(sql.Identifier(relation))
+    return {(s, b): (m, t) for s, b, m, t in conn.execute(q)}
+
+
+def master_reference(conn: psycopg.Connection) -> Agg:
+    """Agregado de referencia calculado directamente sobre master_events."""
+    q = ("SELECT sede_id, date_trunc('hour', event_ts, 'UTC'), count(*), count(*) FILTER (WHERE tardanza) "
+         "FROM master_events GROUP BY 1, 2")
     return {(s, b): (m, t) for s, b, m, t in conn.execute(q)}
 
 
