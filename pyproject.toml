@@ -1,0 +1,20 @@
+[project]
+name = "lkbench"
+version = "0.1.0"
+description = "Benchmark Lambda vs Kappa y REST vs GraphQL sobre marcaciones de asistencia anonimizadas"
+requires-python = ">=3.11"
+dependencies = [
+    "psycopg[binary]>=3.2",
+    "confluent-kafka>=2.5",
+    "openpyxl>=3.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.5"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

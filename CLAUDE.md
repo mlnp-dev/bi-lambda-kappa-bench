@@ -32,7 +32,7 @@ El docente pide:
 
 ## 2. Caso de uso
 
-Ingesta de **marcaciones de asistencia** reales del personal del Ministerio Público, Distrito Fiscal de Puno, **solo año 2019**, **anonimizadas**: 184 403 eventos, 385 personas, 16 sedes.
+Ingesta de **marcaciones de asistencia** reales del personal del Ministerio Público, Distrito Fiscal de Puno, **2019 a junio de 2021**, **anonimizadas**: 218 841 eventos (2019: 184 403; 2020: 29 426; 2021: 5 012), 460 personas, 16 sedes. 2020-2021 tienen menos registros (pandemia, trabajo remoto): se documenta en el informe.
 
 Fuentes (nunca se versionan, están en `.gitignore`):
 - `PERSONAL AL 12 DE AGOSTO DE 2026.xlsx`: padrón de personal (DNI, domicilio, sueldo, etc.).
@@ -156,8 +156,8 @@ bi-lambda-kappa-bench/
 ### 7.1 Ingesta (Lambda frente a Kappa)
 | Métrica | Cómo se mide |
 |---|---|
-| Throughput | Eventos procesados ÷ tiempo, con el backlog completo precargado (184 403 marcaciones reales de 2019; no se infla con datos sintéticos) |
-| Latencia e2e p50, p95, p99 | Hora de commit en la BD − `produced_at`, con carga constante (por ejemplo 2 000 eventos/s), reemitiendo las marcaciones de 2019 con `produced_at` actual |
+| Throughput | Eventos procesados ÷ tiempo, con el backlog completo precargado (218 841 marcaciones reales 2019-2021; no se infla con datos sintéticos) |
+| Latencia e2e p50, p95, p99 | Hora de commit en la BD − `produced_at`, con carga constante (por ejemplo 2 000 eventos/s), reemitiendo las marcaciones reales con `produced_at` actual |
 | Frescura del dato | Lambda: speed layer e intervalo batch; Kappa: procesador |
 | Tiempo de reproceso | Lambda: recálculo batch completo; Kappa: replay completo a vN+1 |
 | Recursos | CPU y RAM con `docker stats` |
