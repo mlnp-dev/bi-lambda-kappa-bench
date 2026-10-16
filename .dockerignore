@@ -1,0 +1,15 @@
+# Nada de datos personales, secretos ni artefactos locales en el contexto de la imagen.
+.env
+data/
+fuentes/
+*.xlsx
+*.xls
+*.png
+.git/
+.venv/
+**/__pycache__/
+.pytest_cache/
+.ruff_cache/
+bench/results/
+report/
+tests/

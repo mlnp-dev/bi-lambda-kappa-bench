@@ -1,5 +1,25 @@
 name: lkbench
 
+# Configuración común de los contenedores de la aplicación (APIs y procesadores).
+x-app: &app
+  build: .
+  image: lkbench-app:latest
+  environment:
+    POSTGRES_HOST: db
+    POSTGRES_PORT: 5432
+    POSTGRES_USER: ${POSTGRES_USER}
+    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    POSTGRES_DB: ${POSTGRES_DB}
+    KAFKA_BOOTSTRAP: redpanda:9092
+    TOPIC: ${TOPIC}
+    LAMBDA_BLOCK_SIZE: ${LAMBDA_BLOCK_SIZE:-1000}
+  depends_on:
+    db:
+      condition: service_healthy
+    redpanda:
+      condition: service_healthy
+  restart: unless-stopped
+
 services:
   db:
     image: postgres:16.4
@@ -47,6 +67,50 @@ services:
         rpk topic describe ${TOPIC} -X brokers=redpanda:9092 >/dev/null 2>&1 ||
         rpk topic create ${TOPIC} -p 3 -r 1 -c retention.ms=-1 -c retention.bytes=-1 -X brokers=redpanda:9092
     restart: "no"
+
+  # --- APIs: un worker cada una para comparar en igualdad de condiciones -------------
+  api-rest:
+    <<: *app
+    command: ["uvicorn", "--factory", "lkbench.api.rest_app:create_app",
+              "--host", "0.0.0.0", "--port", "8000", "--workers", "1", "--no-access-log"]
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=2)"]
+      interval: 3s
+      retries: 20
+
+  api-graphql:
+    <<: *app
+    command: ["uvicorn", "--factory", "lkbench.api.graphql_app:create_app",
+              "--host", "0.0.0.0", "--port", "8001", "--workers", "1", "--no-access-log"]
+    ports:
+      - "8001:8001"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/health', timeout=2)"]
+      interval: 3s
+      retries: 20
+
+  # --- Procesadores en modo continuo (perfil "stream": docker compose --profile stream up) --
+  kappa:
+    <<: *app
+    profiles: ["stream"]
+    command: ["python", "-m", "lkbench.kappa_arch.processor"]
+
+  lambda-master:
+    <<: *app
+    profiles: ["stream"]
+    command: ["python", "-m", "lkbench.lambda_arch.master_sink"]
+
+  lambda-speed:
+    <<: *app
+    profiles: ["stream"]
+    command: ["python", "-m", "lkbench.lambda_arch.speed_layer"]
+
+  lambda-batch:
+    <<: *app
+    profiles: ["stream"]
+    command: ["python", "-m", "lkbench.lambda_arch.batch_layer", "--every", "${BATCH_EVERY:-60}"]
 
 volumes:
   pgdata:
