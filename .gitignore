@@ -1,0 +1,22 @@
+# Datos personales: NUNCA al repositorio
+*.xlsx
+*.xls
+fuentes/
+data/
+
+# Secretos
+.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# LaTeX
+report/*.aux
+report/*.log
+report/*.out
+report/*.bbl
+report/*.blg
