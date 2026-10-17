@@ -13,6 +13,8 @@
     python tasks.py batch    batch layer Lambda: recálculo completo A/B (args extra: --every SEG)
     python tasks.py api      construye y levanta api-rest (:8000/docs) y api-graphql (:8001/graphql)
     python tasks.py verify   comprueba que las vistas Kappa y Lambda cuadran con master_events y el CSV
+    python tasks.py bench    benchmark completo: ingesta, API y figuras en bench/results/ (args: ingest|api|plot)
+    python tasks.py report   compila report/informe.pdf (tectonic) con las cifras de bench/results/
 """
 
 from __future__ import annotations
@@ -164,8 +166,23 @@ def verify() -> None:
         sys.exit(1)
 
 
+def bench(*parts: str) -> None:
+    parts = parts or ("ingest", "api", "plot")
+    if "ingest" in parts:
+        sh(sys.executable, "bench/run_ingest.py")
+    if "api" in parts:
+        sh(sys.executable, "bench/run_api.py")
+    if "plot" in parts:
+        sh(sys.executable, "bench/plot.py")
+
+
+def report() -> None:
+    sh(sys.executable, "bench/plot.py")            # regenera report/numbers.tex y las figuras
+    sh("tectonic", "-X", "compile", "report/informe.tex")
+
+
 TASKS = {f.__name__: f for f in (up, down, reset, anon, seed, check, produce, kappa, replay, lambda_, batch,
-                                  api, verify)}
+                                  api, verify, bench, report)}
 
 if __name__ == "__main__":
     if len(sys.argv) < 2 or sys.argv[1] not in TASKS:
