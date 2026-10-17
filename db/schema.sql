@@ -15,6 +15,13 @@ CREATE TABLE consumer_offsets (
     PRIMARY KEY (consumer, partition)
 );
 
+-- Latencia de extremo a extremo por evento (solo con TRACK_LATENCY=1, para el benchmark).
+CREATE TABLE e2e_latency (
+    consumer      text        NOT NULL,
+    produced_at   bigint      NOT NULL,   -- epoch ms del productor
+    committed_at  timestamptz NOT NULL    -- escritura en la transacción, justo antes del commit
+);
+
 -- Forma común de todas las vistas agregadas: por sede y hora.
 -- (Se usa como plantilla con CREATE TABLE ... (LIKE agg_template INCLUDING ALL).)
 CREATE TABLE agg_template (

@@ -7,9 +7,10 @@ la BD y se hace seek. Los offsets de Kafka no se usan (enable.auto.commit = fals
 
 from __future__ import annotations
 
+import json
 import logging
 import time
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 
 import psycopg
 from confluent_kafka import OFFSET_BEGINNING, KafkaError, TopicPartition
@@ -40,6 +41,8 @@ class Stats:
     invalid: int = 0     # mensajes mal formados (se saltan, pero avanzan el offset)
     batches: int = 0
     seconds: float = 0.0
+    started_at: float = 0.0   # epoch (s) al empezar a consumir
+    ended_at: float = 0.0
     offsets: dict[int, int] = field(default_factory=dict)
 
     @property
@@ -56,6 +59,9 @@ class StreamConsumer:
     def __init__(self, s: Settings, batch_size: int = 5000):
         self.s = s
         self.batch_size = batch_size
+        # Con TRACK_LATENCY se copia también produced_at para medir la latencia de extremo a extremo.
+        extra = ("produced_at",) if s.track_latency and "produced_at" not in self.columns else ()
+        self._cols = self.columns + extra
 
     # --- puntos de extensión -------------------------------------------------------------
     def setup(self, conn: psycopg.Connection) -> None:
@@ -76,7 +82,10 @@ class StreamConsumer:
         st = Stats()
         with db.connect(self.s) as conn:
             self.setup(conn)
-            cols = ", ".join(f"{c} {COLTYPES[c]}" for c in self.columns)
+            if self.s.track_latency:
+                conn.execute("CREATE TABLE IF NOT EXISTS e2e_latency (consumer text NOT NULL, "
+                             "produced_at bigint NOT NULL, committed_at timestamptz NOT NULL)")
+            cols = ", ".join(f"{c} {COLTYPES[c]}" for c in self._cols)
             conn.execute(f"CREATE TEMP TABLE IF NOT EXISTS stage ({cols}) ON COMMIT DELETE ROWS")
             conn.commit()
             nxt = self.initial_offsets(conn, stored_offsets(conn, self.name))
@@ -88,14 +97,14 @@ class StreamConsumer:
                 c.assign([TopicPartition(self.s.topic, p, nxt.get(p, OFFSET_BEGINNING)) for p in parts])
                 target = kafka.high_watermarks(c, self.s.topic, parts) if until_caught_up else {}
                 log.info("%s desde offsets %s (objetivo %s)", self.name, nxt, target or "continuo")
-                t0 = time.perf_counter()
+                t0, st.started_at = time.perf_counter(), time.time()
                 while max_batches is None or st.batches < max_batches:
                     msgs = [m for m in c.consume(self.batch_size, timeout=0.5) if not _error(m)]
                     if msgs:
                         self._process(conn, msgs, nxt, st)
                     if until_caught_up and self._caught_up(c, parts, nxt, target):
                         break
-                st.seconds = time.perf_counter() - t0
+                st.seconds, st.ended_at = time.perf_counter() - t0, time.time()
             finally:
                 c.close()
         st.offsets = dict(nxt)
@@ -114,10 +123,14 @@ class StreamConsumer:
                 continue
             rows.append(self._row(e, m))
         with conn.transaction(), conn.cursor() as cur:
-            with cur.copy(f"COPY stage ({', '.join(self.columns)}) FROM STDIN") as cp:
+            with cur.copy(f"COPY stage ({', '.join(self._cols)}) FROM STDIN") as cp:
                 for r in rows:
                     cp.write_row(r)
             counted = self.write(cur)
+            if self.s.track_latency:
+                # Hora de escritura dentro de la transacción, justo antes del commit.
+                cur.execute("INSERT INTO e2e_latency SELECT %s, produced_at, clock_timestamp() FROM stage",
+                            (self.name,))
             cur.executemany(
                 "INSERT INTO consumer_offsets (consumer, partition, next_offset) VALUES (%s, %s, %s) "
                 "ON CONFLICT (consumer, partition) DO UPDATE SET next_offset = EXCLUDED.next_offset",
@@ -132,7 +145,7 @@ class StreamConsumer:
         v = {"event_id": e.event_id, "staff_id": e.staff_id, "sede_id": e.sede_id, "tipo": e.tipo,
              "tardanza": e.tardanza, "event_ts": e.event_ts, "bucket": e.bucket,
              "produced_at": e.produced_at, "kafka_partition": m.partition(), "kafka_offset": m.offset()}
-        return tuple(v[c] for c in self.columns)
+        return tuple(v[c] for c in self._cols)
 
     def _caught_up(self, c, parts: list[int], nxt: dict[int, int], target: dict[int, int]) -> bool:
         # La posición del consumidor cubre offsets sin mensaje (p. ej. marcadores de control).
@@ -149,7 +162,12 @@ def _error(m) -> bool:
     raise RuntimeError(f"error de Kafka: {err}")
 
 
-def run_cli(consumer: StreamConsumer, until_caught_up: bool) -> None:
+def print_stats(obj) -> None:
+    """Línea legible por máquina para el benchmark (bench/run_ingest.py)."""
+    print("STATS " + json.dumps(asdict(obj), default=str), flush=True)
+
+
+def run_cli(consumer: StreamConsumer, until_caught_up: bool, as_json: bool = False) -> None:
     try:
         st = consumer.run(until_caught_up=until_caught_up)
     except KeyboardInterrupt:
@@ -157,3 +175,5 @@ def run_cli(consumer: StreamConsumer, until_caught_up: bool) -> None:
         return
     log.info("%s: %d leídos, %d nuevos, %d inválidos, %d lotes, %.1f s (%.0f ev/s)", consumer.name,
              st.read, st.counted, st.invalid, st.batches, st.seconds, st.throughput)
+    if as_json:
+        print_stats(st)

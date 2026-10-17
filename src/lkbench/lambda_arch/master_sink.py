@@ -39,9 +39,10 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--until-caught-up", action="store_true")
     ap.add_argument("--batch-size", type=int, default=5000)
+    ap.add_argument("--json", action="store_true", help="imprimir las estadísticas en JSON")
     a = ap.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(message)s")
-    run_cli(MasterSink(settings(), a.batch_size), a.until_caught_up)
+    run_cli(MasterSink(settings(), a.batch_size), a.until_caught_up, a.json)
 
 
 if __name__ == "__main__":

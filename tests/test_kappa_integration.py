@@ -53,3 +53,18 @@ def test_kappa_punta_a_punta(s, events):
         assert active_version(conn) == 2
         assert compare(conn, "kappa_view_v2", expected).ok
         assert compare(conn, "kappa_serving", expected).ok
+
+
+def test_registra_latencia_solo_si_se_pide(s, events):
+    from lkbench import db, kafka
+    from lkbench.kappa_arch.processor import Processor
+    from lkbench.producer import send
+
+    send(kafka.producer(s.kafka_bootstrap), s.topic, events[:50])
+    Processor(s, 1).run(until_caught_up=True)                         # sin TRACK_LATENCY
+    send(kafka.producer(s.kafka_bootstrap), s.topic, events[50:80])
+    Processor(s.with_(track_latency=True), 1).run(until_caught_up=True)
+    with db.connect(s) as conn:
+        n, minimo = conn.execute("SELECT count(*), min(produced_at) FROM e2e_latency "
+                                 "WHERE consumer = 'kappa_v1'").fetchone()
+    assert n == 30 and minimo > 1_700_000_000_000
