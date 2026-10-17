@@ -72,7 +72,7 @@ def figure(ingest: dict, api: dict) -> None:
         bar(a1, xs, [s[arch][f"latency_{p}_ms"] for p in pct], arch, w)
     a1.set_xticks(range(3), pct)
     a1.set_ylabel("ms", color="#52514e")
-    a1.set_title(f"(a) Latencia e2e a {fmt(ingest['params']['rate'])} ev/s", fontsize=7.5, loc="left")
+    a1.set_title(f"(a) Latencia e2e a {ingest['params']['rate']:,.0f} ev/s".replace(",", " "), fontsize=7.5, loc="left")
     a1.legend(frameon=False, fontsize=6.5, loc="upper left")
     style(a1)
 
@@ -88,7 +88,8 @@ def figure(ingest: dict, api: dict) -> None:
     a2.set_xticks(range(len(keys)), [SCEN[sc] + ("" if a == "-" else f"\n{LABEL[a]}") for sc, a in keys])
     a2.set_ylabel("req/s", color="#52514e")
     a2.set_title(f"(b) Throughput de la API, concurrencia {conc} (1 worker)", fontsize=7.5, loc="left")
-    a2.legend(frameon=False, fontsize=6.5, loc="upper right")
+    a2.set_ylim(0, a2.get_ylim()[1] * 1.15)
+    a2.legend(frameon=False, fontsize=6.5, loc="upper center", ncol=2)
     style(a2)
 
     fig.tight_layout(pad=0.4, w_pad=1.5)
