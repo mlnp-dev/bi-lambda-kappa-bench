@@ -1,0 +1,114 @@
+\documentclass[conference,a4paper]{IEEEtran}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-noshorthands,es-tabla]{babel}
+\usepackage{booktabs,graphicx,url}
+\usepackage[hidelinks]{hyperref}
+\input{numbers.tex}   % cifras generadas por bench/plot.py desde bench/results/
+
+\begin{document}
+\title{Lambda frente a Kappa y REST frente a GraphQL:\\ benchmark local sobre marcaciones de asistencia}
+\author{\IEEEauthorblockN{Mary Luz Nina Palacios}
+\IEEEauthorblockA{Maestría, Business Intelligence -- FINESI\\ Actividad N.\textsuperscript{o}~1: Arquitecturas}}
+\maketitle
+
+\begin{abstract}
+Se implementan y miden, sobre la misma máquina y los mismos datos, dos arquitecturas de ingesta
+(Lambda y Kappa) y dos de API (REST y GraphQL). El caso de uso son \NumEvents{} marcaciones de
+asistencia reales y anonimizadas (2019--2021). Kappa procesa el backlog \NumTpRatio{} veces más rápido
+y con menos código; Lambda reprocesa el histórico en menos tiempo. REST supera a GraphQL en
+rendimiento en todos los escenarios con un worker.
+\end{abstract}
+
+\section{Introducción}
+Una plataforma de BI debe ingerir eventos con baja latencia y, a la vez, poder recalcular sus
+agregados cuando cambia la lógica. Lambda resuelve esto con dos capas (batch y speed) y Kappa con un
+solo flujo que se reprocesa desde el log~\cite{lin2017}. En el acceso, REST y GraphQL ofrecen el mismo
+contenido con contratos distintos~\cite{brito2019}. El objetivo es medir ambas decisiones en un caso
+real y concluir cuál conviene y en qué condiciones.
+
+\section{Método}
+\textbf{Entorno.} Un solo equipo: \EnvCpu, \EnvRam{}~GB de RAM, Windows~11 con Docker \EnvDocker{}
+(VM WSL2 con \EnvVmCpu{} CPU lógicas y \EnvVmRam{}~GiB). \EnvPostgres, Redpanda \EnvRedpanda{}
+(API de Kafka, topic de 3 particiones) y Python \EnvPython{} (FastAPI y Strawberry).
+
+\textbf{Caso de uso.} Marcaciones (entrada, salida y refrigerio) del personal del Ministerio Público,
+Distrito Fiscal de Puno, de 2019 a junio de 2021: \NumEvents{} eventos, 460 personas y 16 sedes. Los
+años 2020--2021 tienen menos registros por la pandemia. El DNI se reemplaza por un HMAC-SHA256 con
+sal privada; no se publican datos personales. Se considera tardanza toda entrada posterior a las
+08:00 (supuesto). El agregado es, por sede y hora, el número de marcaciones y de tardanzas.
+
+\textbf{Arquitecturas.} \emph{Kappa}: un procesador agrega en \texttt{kappa\_view\_vN}; el reproceso
+lee el topic desde el offset~0 hacia \texttt{v(N+1)} y cambia la vista \texttt{kappa\_serving}.
+\emph{Lambda}~\cite{kiran2015}: un \emph{master sink} guarda cada evento en \texttt{master\_events};
+la capa batch recalcula todo en SQL sobre una tabla A/B y, en una transacción, mueve el
+\emph{cutoff} y purga la capa speed, que agrega lo posterior por bloques de offset; la consulta une
+ambas. En las dos, los offsets se guardan en la misma transacción que el agregado (efecto
+\emph{exactly-once}) y el \texttt{event\_id} determinista hace idempotentes los reenvíos. Las dos APIs
+usan el mismo módulo de repositorio y aceptan \texttt{arch=lambda|kappa}.
+
+\textbf{Métricas.} Throughput con el backlog completo precargado; latencia de extremo a extremo
+(commit en la BD menos \texttt{produced\_at}) a \NumRate{}~ev/s durante \NumLatSeconds{}~s, sin los
+primeros \NumWarmup{}~s y con el batch cada \NumBatchEvery{}~s; tiempo de reproceso; CPU y RAM con
+\texttt{docker stats}; líneas de código; y consistencia exacta frente a la referencia. En la API, con
+\texttt{oha} y un worker por API: escenarios \emph{hourly} (un mes de una sede), \emph{top-sedes} y
+\emph{POST events} (\NumPostEvents{} eventos), concurrencia \NumApiConc, \NumApiWarmup{}~s de
+calentamiento y \NumApiSeconds{}~s de medición. Cada escenario se repite \NumReps{}~veces (API:
+\NumApiReps) y se reporta la mediana. Todo se reproduce con \texttt{python tasks.py bench}.
+
+\section{Resultados}
+La Tabla~\ref{tab:ingest} resume la ingesta. Ambas vistas cuadran exactamente con la referencia.
+Kappa procesa \NumTpKappa{}~ev/s frente a \NumTpLambda{}~ev/s de Lambda, que escribe cada evento dos
+veces (\texttt{master\_events} y capa speed). Con carga constante las latencias son del mismo orden
+(p50 de \NumPfiftyKappa{} frente a \NumPfiftyLambda{}~ms), porque las dominan el sondeo y el tamaño
+de lote del consumidor. En reproceso la relación se invierte: Lambda recalcula el histórico en
+\NumRpLambda{}~s con una sola consulta SQL sobre \texttt{master\_events}, mientras que el replay
+Kappa tarda \NumRpKappa{}~s porque relee el topic completo.
+
+\begin{table}[!t]
+\centering\caption{Ingesta (mediana de \NumReps{} repeticiones)}\label{tab:ingest}
+\footnotesize\input{tab_ingest.tex}
+\end{table}
+
+\begin{table*}[!t]
+\centering\caption{API: requests/s y latencia en ms (mediana de \NumApiReps{} repeticiones, tasa de error máxima \NumMaxErr\,\%)}\label{tab:api}
+\footnotesize\input{tab_api.tex}
+\end{table*}
+
+\begin{figure*}[!t]
+\centering\includegraphics[width=\textwidth]{figs/fig_bench.pdf}
+\caption{(a) Latencia de extremo a extremo de la ingesta. (b) Throughput de la API por escenario.}\label{fig:bench}
+\end{figure*}
+
+La Tabla~\ref{tab:api} y la Fig.~\ref{fig:bench} muestran la API. Con concurrencia \NumApiCmax, REST
+atiende \NumRatioHourly{} veces más peticiones que GraphQL en \emph{hourly}, \NumRatioTop{} veces en
+\emph{top-sedes} y \NumRatioPost{} veces en la ingesta. La brecha crece con el tamaño de la respuesta:
+el costo está en la validación y serialización campo a campo de GraphQL, no en la base de datos.
+Entre vistas, \emph{top-sedes} es \NumTopKappaOverLambda{} veces más rápido sobre Kappa, porque
+\texttt{lambda\_serving} debe unir batch y speed en cada consulta.
+
+\section{Discusión}
+Persico et~al.~\cite{persico2018} concluyen que Lambda supera a Kappa en análisis de redes sociales en
+la nube; aquí Kappa gana en ingesta y en simplicidad (\NumLocKappa{} frente a \NumLocLambda{} líneas
+propias y un servicio frente a tres), pero Lambda gana en reproceso, coincidiendo en que el resultado
+depende de la carga y del costo de releer el log~\cite{lin2017}. En API, la literatura atribuye a
+GraphQL menos esfuerzo de implementación~\cite{brito2020} y respuestas más pequeñas~\cite{brito2019};
+este benchmark no contradice eso, pero muestra que en Python esa flexibilidad cuesta rendimiento
+cuando el cliente ya pide exactamente lo que el endpoint REST devuelve.
+
+\emph{Amenazas a la validez}: un solo nodo y una VM compartida (Redpanda, PostgreSQL, procesadores y
+cliente compiten por CPU); Python como cuello de botella en procesadores y APIs; el volumen real
+(\NumEvents{} eventos) es pequeño, por eso la carga constante reemite las mismas marcaciones con
+\texttt{produced\_at} actual; y la regla de tardanza es un supuesto.
+
+\section{Conclusión}
+Para este caso (volumen moderado, una sola lógica de agregación y necesidad de datos frescos)
+conviene \textbf{Kappa}: más throughput, latencia equivalente, menos código y una sola ruta de
+cálculo. Lambda se justifica si el reproceso frecuente del histórico es crítico o si la lógica batch
+difiere de la de streaming. Para la API conviene \textbf{REST} cuando las consultas son fijas y el
+rendimiento importa; GraphQL, cuando hay muchos clientes con necesidades de datos distintas.
+Repositorio: \url{https://github.com/mlnp-dev/bi-lambda-kappa-bench}.
+
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
+\end{document}

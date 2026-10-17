@@ -6,7 +6,7 @@ Distrito Fiscal de Puno (2019 a junio de 2021: 218 841 eventos, 460 personas, 16
 
 Business Intelligence, maestría (FINESI). Actividad N° 1: Arquitecturas.
 
-> Estado: ingesta Kappa y Lambda y APIs REST y GraphQL terminadas. El benchmark y el informe se agregan en las fases siguientes.
+> Informe (2 páginas, IEEEtran): [`report/informe.pdf`](report/informe.pdf). Resultados crudos: [`bench/results/`](bench/results/).
 
 ## Stack
 
@@ -110,6 +110,54 @@ responde cuando Redpanda confirmó la escritura (aún no procesada por Kappa/Lam
 
 Los procesadores también pueden correr como contenedores en modo continuo:
 `docker compose --profile stream up -d` (kappa, lambda-master, lambda-speed, lambda-batch).
+
+## Benchmark
+
+```bash
+python tasks.py bench          # ingesta + API + figuras (≈ 1 h); o por partes: bench ingest | api | plot
+python tasks.py report         # regenera tablas/cifras y compila report/informe.pdf (requiere tectonic)
+```
+
+- **Ingesta** (`bench/run_ingest.py`): cada corrida usa un esquema de PostgreSQL desechable y los
+  procesadores en contenedores. Throughput con el backlog real completo; latencia de extremo a
+  extremo a carga constante (2 000 ev/s, 30 s, reemitiendo marcaciones reales con `produced_at`
+  actual); reproceso (replay Kappa a v2 frente a recálculo batch); CPU/RAM con `docker stats`;
+  líneas de código; y consistencia exacta de cada vista.
+- **API** (`bench/run_api.py`): [oha](https://github.com/hatoo/oha) en un contenedor de la misma red,
+  un worker por API; escenarios `hourly`, `top-sedes` y `POST events` sobre ambas vistas;
+  concurrencia 10 y 50, 10 s de calentamiento y 30 s de medición.
+- 3 repeticiones por escenario; se reporta la mediana. Las cifras del informe salen solo de
+  `bench/results/` (`bench/plot.py` genera `report/numbers.tex` y las tablas).
+
+| Archivo | Contenido |
+|---|---|
+| `bench/results/ingest_raw.json` | todas las corridas de ingesta, entorno y complejidad |
+| `bench/results/ingest_summary.csv` | medianas por arquitectura |
+| `bench/results/api_raw.json` | todas las corridas de API (salida de oha) |
+| `bench/results/api_summary.csv` | medianas por API, escenario, vista y concurrencia |
+| `bench/results/fig_bench.png` | figura del informe |
+
+![Benchmark](bench/results/fig_bench.png)
+
+### Resultados (mediana de 3 repeticiones; detalle en `bench/results/`)
+
+| Ingesta | Lambda | Kappa |
+|---|---:|---:|
+| Throughput con el backlog completo (ev/s) | 22 963 | 32 793 |
+| Latencia e2e p50 / p99 a 2 000 ev/s (ms) | 331 / 622 | 310 / 577 |
+| Reproceso completo del histórico (s) | 0,61 | 6,49 |
+| CPU media de los procesadores (%) | 120 | 66 |
+| Líneas de código propias / servicios | 173 / 3 | 119 / 1 |
+| Cuadra exactamente con la referencia | sí | sí |
+
+- **API (concurrencia 50, 1 worker):** REST atiende 7,8 veces más req/s que GraphQL en `hourly`,
+  1,4 veces en `top-sedes` y 3,4 veces en `POST events`; 0 % de errores. GraphQL satura su CPU en
+  serializar campo a campo. `top-sedes` es 3,3 veces más rápido sobre Kappa que sobre Lambda
+  (`lambda_serving` une batch y speed en cada consulta).
+- **Conclusión:** para este caso conviene **Kappa** (más throughput, latencia equivalente, menos
+  código y una sola ruta de cálculo); Lambda solo si el reproceso frecuente del histórico es
+  crítico. En la API conviene **REST** con consultas fijas; GraphQL, si hay clientes con
+  necesidades de datos muy distintas.
 
 ## Tests
 
