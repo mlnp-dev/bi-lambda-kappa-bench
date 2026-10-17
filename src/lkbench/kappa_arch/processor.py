@@ -98,6 +98,7 @@ def main() -> None:
     ap.add_argument("--version", type=int, help="versión vN (por defecto, la que sirve kappa_serving)")
     ap.add_argument("--until-caught-up", action="store_true", help="terminar al alcanzar el final del topic")
     ap.add_argument("--batch-size", type=int, default=5000)
+    ap.add_argument("--json", action="store_true", help="imprimir las estadísticas en JSON")
     a = ap.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(message)s")
     s = settings()
@@ -105,7 +106,7 @@ def main() -> None:
     if v is None:
         with db.connect(s) as conn:
             v = active_version(conn)
-    run_cli(Processor(s, v, a.batch_size), a.until_caught_up)
+    run_cli(Processor(s, v, a.batch_size), a.until_caught_up, a.json)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,2705 @@
+{
+  "params": {
+    "reps": 3,
+    "seconds": 30,
+    "warmup_s": 10,
+    "conc": [
+      10,
+      50
+    ],
+    "oha": "ghcr.io/hatoo/oha:1.16.0",
+    "workers_per_api": 1,
+    "hourly": {
+      "sede": 1,
+      "from": "2019-04-01T00:00:00-05:00",
+      "to": "2019-05-01T00:00:00-05:00"
+    },
+    "top_limit": 5,
+    "post_events_per_request": 10,
+    "post_topic": "bench_api"
+  },
+  "runs": [
+    {
+      "api": "rest",
+      "scenario": "hourly",
+      "arch": "lambda",
+      "conc": 10,
+      "rep": 1,
+      "requests": 14701,
+      "rps": 489.74422006490767,
+      "p50_ms": 19.171865999999998,
+      "p95_ms": 26.936838,
+      "p99_ms": 36.666453000000004,
+      "error_rate": 0.0,
+      "status": {
+        "200": 14701
+      },
+      "errors": {},
+      "bytes_per_request": 20812,
+      "api_cpu_mean_pct": 106.8,
+      "db_cpu_mean_pct": 70.4,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 106.8,
+          "cpu_max_pct": 129.2,
+          "mem_max_mib": 47.9,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 70.4,
+          "cpu_max_pct": 80.2,
+          "mem_max_mib": 230.2,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 4.1,
+          "cpu_max_pct": 10.4,
+          "mem_max_mib": 264.0,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "hourly",
+      "arch": "lambda",
+      "conc": 10,
+      "rep": 1,
+      "requests": 1920,
+      "rps": 63.75675902773679,
+      "p50_ms": 151.324818,
+      "p95_ms": 199.43655199999998,
+      "p99_ms": 219.038654,
+      "error_rate": 0.0,
+      "status": {
+        "200": 1920
+      },
+      "errors": {},
+      "bytes_per_request": 20832,
+      "api_cpu_mean_pct": 106.9,
+      "db_cpu_mean_pct": 12.0,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 106.9,
+          "cpu_max_pct": 129.2,
+          "mem_max_mib": 71.9,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 12.0,
+          "cpu_max_pct": 15.9,
+          "mem_max_mib": 244.9,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 3.5,
+          "cpu_max_pct": 9.6,
+          "mem_max_mib": 264.5,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "hourly",
+      "arch": "lambda",
+      "conc": 50,
+      "rep": 1,
+      "requests": 13841,
+      "rps": 459.77679561142975,
+      "p50_ms": 104.384969,
+      "p95_ms": 134.484417,
+      "p99_ms": 154.43875000000003,
+      "error_rate": 0.0,
+      "status": {
+        "200": 13841
+      },
+      "errors": {},
+      "bytes_per_request": 20812,
+      "api_cpu_mean_pct": 104.8,
+      "db_cpu_mean_pct": 69.0,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 104.8,
+          "cpu_max_pct": 127.7,
+          "mem_max_mib": 61.2,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 69.0,
+          "cpu_max_pct": 76.1,
+          "mem_max_mib": 246.8,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 3.3,
+          "cpu_max_pct": 10.1,
+          "mem_max_mib": 264.2,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "hourly",
+      "arch": "lambda",
+      "conc": 50,
+      "rep": 1,
+      "requests": 1795,
+      "rps": 58.68067986269136,
+      "p50_ms": 837.756498,
+      "p95_ms": 949.554519,
+      "p99_ms": 1045.0636069999998,
+      "error_rate": 0.0,
+      "status": {
+        "200": 1795
+      },
+      "errors": {},
+      "bytes_per_request": 20832,
+      "api_cpu_mean_pct": 104.7,
+      "db_cpu_mean_pct": 10.9,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 104.7,
+          "cpu_max_pct": 136.2,
+          "mem_max_mib": 75.7,
+          "samples": 16
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 10.9,
+          "cpu_max_pct": 15.8,
+          "mem_max_mib": 247.4,
+          "samples": 16
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 4.2,
+          "cpu_max_pct": 10.4,
+          "mem_max_mib": 274.4,
+          "samples": 16
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "hourly",
+      "arch": "kappa",
+      "conc": 10,
+      "rep": 1,
+      "requests": 15415,
+      "rps": 513.583924824619,
+      "p50_ms": 18.417333,
+      "p95_ms": 25.786279,
+      "p99_ms": 32.980899,
+      "error_rate": 0.0,
+      "status": {
+        "200": 15415
+      },
+      "errors": {},
+      "bytes_per_request": 20812,
+      "api_cpu_mean_pct": 105.9,
+      "db_cpu_mean_pct": 35.8,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 105.9,
+          "cpu_max_pct": 137.7,
+          "mem_max_mib": 48.6,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 35.8,
+          "cpu_max_pct": 41.6,
+          "mem_max_mib": 249.2,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 3.4,
+          "cpu_max_pct": 9.6,
+          "mem_max_mib": 276.3,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "hourly",
+      "arch": "kappa",
+      "conc": 10,
+      "rep": 1,
+      "requests": 1972,
+      "rps": 65.4925895230105,
+      "p50_ms": 147.47038500000002,
+      "p95_ms": 194.571741,
+      "p99_ms": 222.48944600000002,
+      "error_rate": 0.0,
+      "status": {
+        "200": 1972
+      },
+      "errors": {},
+      "bytes_per_request": 20832,
+      "api_cpu_mean_pct": 103.4,
+      "db_cpu_mean_pct": 6.8,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 103.4,
+          "cpu_max_pct": 126.7,
+          "mem_max_mib": 75.3,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 6.8,
+          "cpu_max_pct": 11.1,
+          "mem_max_mib": 249.0,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 2.9,
+          "cpu_max_pct": 9.2,
+          "mem_max_mib": 264.5,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "hourly",
+      "arch": "kappa",
+      "conc": 50,
+      "rep": 1,
+      "requests": 15152,
+      "rps": 503.6952524965735,
+      "p50_ms": 93.59186,
+      "p95_ms": 127.208222,
+      "p99_ms": 153.846436,
+      "error_rate": 0.0,
+      "status": {
+        "200": 15152
+      },
+      "errors": {},
+      "bytes_per_request": 20812,
+      "api_cpu_mean_pct": 107.2,
+      "db_cpu_mean_pct": 36.2,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 107.2,
+          "cpu_max_pct": 127.1,
+          "mem_max_mib": 61.7,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 36.2,
+          "cpu_max_pct": 41.1,
+          "mem_max_mib": 247.7,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 3.3,
+          "cpu_max_pct": 9.7,
+          "mem_max_mib": 264.5,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "hourly",
+      "arch": "kappa",
+      "conc": 50,
+      "rep": 1,
+      "requests": 1599,
+      "rps": 52.28729712130717,
+      "p50_ms": 830.498926,
+      "p95_ms": 1926.746045,
+      "p99_ms": 2846.896188,
+      "error_rate": 0.0,
+      "status": {
+        "200": 1599
+      },
+      "errors": {},
+      "bytes_per_request": 20832,
+      "api_cpu_mean_pct": 96.4,
+      "db_cpu_mean_pct": 6.4,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 96.4,
+          "cpu_max_pct": 126.2,
+          "mem_max_mib": 75.4,
+          "samples": 16
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 6.4,
+          "cpu_max_pct": 13.0,
+          "mem_max_mib": 249.9,
+          "samples": 16
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 3.1,
+          "cpu_max_pct": 10.0,
+          "mem_max_mib": 270.6,
+          "samples": 16
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "top-sedes",
+      "arch": "lambda",
+      "conc": 10,
+      "rep": 1,
+      "requests": 2089,
+      "rps": 69.28818856465354,
+      "p50_ms": 145.754595,
+      "p95_ms": 174.155673,
+      "p99_ms": 183.050168,
+      "error_rate": 0.0,
+      "status": {
+        "200": 2089
+      },
+      "errors": {},
+      "bytes_per_request": 343,
+      "api_cpu_mean_pct": 45.1,
+      "db_cpu_mean_pct": 940.8,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 45.1,
+          "cpu_max_pct": 108.9,
+          "mem_max_mib": 62.0,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 940.8,
+          "cpu_max_pct": 987.6,
+          "mem_max_mib": 326.5,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 6.2,
+          "cpu_max_pct": 22.5,
+          "mem_max_mib": 274.6,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "top-sedes",
+      "arch": "lambda",
+      "conc": 10,
+      "rep": 1,
+      "requests": 1898,
+      "rps": 63.02079786993645,
+      "p50_ms": 157.562604,
+      "p95_ms": 207.806823,
+      "p99_ms": 250.01549400000002,
+      "error_rate": 0.0,
+      "status": {
+        "200": 1898
+      },
+      "errors": {},
+      "bytes_per_request": 360,
+      "api_cpu_mean_pct": 102.5,
+      "db_cpu_mean_pct": 803.0,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 102.5,
+          "cpu_max_pct": 165.6,
+          "mem_max_mib": 75.5,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 803.0,
+          "cpu_max_pct": 871.6,
+          "mem_max_mib": 338.0,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 7.9,
+          "cpu_max_pct": 23.1,
+          "mem_max_mib": 264.3,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "top-sedes",
+      "arch": "lambda",
+      "conc": 50,
+      "rep": 1,
+      "requests": 2088,
+      "rps": 67.7759254909118,
+      "p50_ms": 729.778795,
+      "p95_ms": 839.071403,
+      "p99_ms": 881.392513,
+      "error_rate": 0.0,
+      "status": {
+        "200": 2088
+      },
+      "errors": {},
+      "bytes_per_request": 343,
+      "api_cpu_mean_pct": 51.5,
+      "db_cpu_mean_pct": 973.8,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 51.5,
+          "cpu_max_pct": 114.0,
+          "mem_max_mib": 62.4,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 973.8,
+          "cpu_max_pct": 995.0,
+          "mem_max_mib": 346.5,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 7.3,
+          "cpu_max_pct": 24.2,
+          "mem_max_mib": 274.9,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "top-sedes",
+      "arch": "lambda",
+      "conc": 50,
+      "rep": 1,
+      "requests": 1929,
+      "rps": 62.77348496166466,
+      "p50_ms": 782.694529,
+      "p95_ms": 956.515188,
+      "p99_ms": 1000.1772840000001,
+      "error_rate": 0.0,
+      "status": {
+        "200": 1929
+      },
+      "errors": {},
+      "bytes_per_request": 360,
+      "api_cpu_mean_pct": 94.4,
+      "db_cpu_mean_pct": 794.9,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 94.4,
+          "cpu_max_pct": 151.9,
+          "mem_max_mib": 76.6,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 794.9,
+          "cpu_max_pct": 896.8,
+          "mem_max_mib": 349.5,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 6.0,
+          "cpu_max_pct": 18.4,
+          "mem_max_mib": 274.5,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "top-sedes",
+      "arch": "kappa",
+      "conc": 10,
+      "rep": 1,
+      "requests": 6867,
+      "rps": 228.4594240653077,
+      "p50_ms": 43.876263,
+      "p95_ms": 57.691396,
+      "p99_ms": 62.136025999999994,
+      "error_rate": 0.0,
+      "status": {
+        "200": 6867
+      },
+      "errors": {},
+      "bytes_per_request": 343,
+      "api_cpu_mean_pct": 80.9,
+      "db_cpu_mean_pct": 839.7,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 80.9,
+          "cpu_max_pct": 134.4,
+          "mem_max_mib": 60.5,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 839.7,
+          "cpu_max_pct": 909.7,
+          "mem_max_mib": 287.4,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 7.6,
+          "cpu_max_pct": 27.0,
+          "mem_max_mib": 269.9,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "top-sedes",
+      "arch": "kappa",
+      "conc": 10,
+      "rep": 1,
+      "requests": 4969,
+      "rps": 165.4365814654008,
+      "p50_ms": 54.874477,
+      "p95_ms": 98.316393,
+      "p99_ms": 120.303039,
+      "error_rate": 0.0,
+      "status": {
+        "200": 4969
+      },
+      "errors": {},
+      "bytes_per_request": 360,
+      "api_cpu_mean_pct": 112.9,
+      "db_cpu_mean_pct": 278.5,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 112.9,
+          "cpu_max_pct": 148.2,
+          "mem_max_mib": 74.1,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 278.5,
+          "cpu_max_pct": 308.6,
+          "mem_max_mib": 287.5,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 3.9,
+          "cpu_max_pct": 11.3,
+          "mem_max_mib": 264.8,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "top-sedes",
+      "arch": "kappa",
+      "conc": 50,
+      "rep": 1,
+      "requests": 6801,
+      "rps": 225.09838578053595,
+      "p50_ms": 222.851269,
+      "p95_ms": 253.78398,
+      "p99_ms": 264.637005,
+      "error_rate": 0.0,
+      "status": {
+        "200": 6801
+      },
+      "errors": {},
+      "bytes_per_request": 343,
+      "api_cpu_mean_pct": 92.9,
+      "db_cpu_mean_pct": 869.6,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 92.9,
+          "cpu_max_pct": 147.3,
+          "mem_max_mib": 62.2,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 869.6,
+          "cpu_max_pct": 908.1,
+          "mem_max_mib": 287.5,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 6.5,
+          "cpu_max_pct": 21.1,
+          "mem_max_mib": 264.2,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "top-sedes",
+      "arch": "kappa",
+      "conc": 50,
+      "rep": 1,
+      "requests": 4733,
+      "rps": 156.90327937408648,
+      "p50_ms": 315.516564,
+      "p95_ms": 392.25049099999995,
+      "p99_ms": 438.38454,
+      "error_rate": 0.0,
+      "status": {
+        "200": 4733
+      },
+      "errors": {},
+      "bytes_per_request": 360,
+      "api_cpu_mean_pct": 110.1,
+      "db_cpu_mean_pct": 256.2,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 110.1,
+          "cpu_max_pct": 136.3,
+          "mem_max_mib": 75.2,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 256.2,
+          "cpu_max_pct": 287.8,
+          "mem_max_mib": 287.4,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 3.6,
+          "cpu_max_pct": 13.5,
+          "mem_max_mib": 264.6,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "post-events",
+      "arch": null,
+      "conc": 10,
+      "rep": 1,
+      "requests": 11605,
+      "rps": 386.6272865585488,
+      "p50_ms": 20.355521000000003,
+      "p95_ms": 64.389369,
+      "p99_ms": 94.986889,
+      "error_rate": 0.0,
+      "status": {
+        "202": 11605
+      },
+      "errors": {},
+      "bytes_per_request": 15,
+      "api_cpu_mean_pct": 133.9,
+      "db_cpu_mean_pct": 1.8,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 133.9,
+          "cpu_max_pct": 160.7,
+          "mem_max_mib": 49.8,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 1.8,
+          "cpu_max_pct": 6.1,
+          "mem_max_mib": 286.9,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 31.3,
+          "cpu_max_pct": 40.2,
+          "mem_max_mib": 283.1,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "post-events",
+      "arch": null,
+      "conc": 10,
+      "rep": 1,
+      "requests": 4694,
+      "rps": 156.33178446285694,
+      "p50_ms": 58.666754000000005,
+      "p95_ms": 125.61243,
+      "p99_ms": 177.93521800000002,
+      "error_rate": 0.0,
+      "status": {
+        "200": 4694
+      },
+      "errors": {},
+      "bytes_per_request": 28,
+      "api_cpu_mean_pct": 128.2,
+      "db_cpu_mean_pct": 1.8,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 128.2,
+          "cpu_max_pct": 148.1,
+          "mem_max_mib": 76.7,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 1.8,
+          "cpu_max_pct": 6.0,
+          "mem_max_mib": 286.7,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 17.2,
+          "cpu_max_pct": 24.5,
+          "mem_max_mib": 294.4,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "post-events",
+      "arch": null,
+      "conc": 50,
+      "rep": 1,
+      "requests": 15251,
+      "rps": 505.6426819783913,
+      "p50_ms": 95.112256,
+      "p95_ms": 152.946665,
+      "p99_ms": 206.711029,
+      "error_rate": 0.0,
+      "status": {
+        "202": 15251
+      },
+      "errors": {},
+      "bytes_per_request": 15,
+      "api_cpu_mean_pct": 146.1,
+      "db_cpu_mean_pct": 2.1,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 146.1,
+          "cpu_max_pct": 179.8,
+          "mem_max_mib": 64.0,
+          "samples": 16
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 2.1,
+          "cpu_max_pct": 8.1,
+          "mem_max_mib": 290.6,
+          "samples": 16
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 28.6,
+          "cpu_max_pct": 37.9,
+          "mem_max_mib": 324.3,
+          "samples": 16
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "post-events",
+      "arch": null,
+      "conc": 50,
+      "rep": 1,
+      "requests": 4386,
+      "rps": 145.3827569618664,
+      "p50_ms": 348.395833,
+      "p95_ms": 437.70112900000004,
+      "p99_ms": 491.420699,
+      "error_rate": 0.0,
+      "status": {
+        "200": 4386
+      },
+      "errors": {},
+      "bytes_per_request": 28,
+      "api_cpu_mean_pct": 134.2,
+      "db_cpu_mean_pct": 1.6,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 134.2,
+          "cpu_max_pct": 159.8,
+          "mem_max_mib": 77.5,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 1.6,
+          "cpu_max_pct": 5.5,
+          "mem_max_mib": 286.6,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 17.3,
+          "cpu_max_pct": 27.1,
+          "mem_max_mib": 335.0,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "hourly",
+      "arch": "lambda",
+      "conc": 10,
+      "rep": 2,
+      "requests": 1924,
+      "rps": 63.88714288022567,
+      "p50_ms": 149.307072,
+      "p95_ms": 201.67954,
+      "p99_ms": 233.88718,
+      "error_rate": 0.0,
+      "status": {
+        "200": 1924
+      },
+      "errors": {},
+      "bytes_per_request": 20832,
+      "api_cpu_mean_pct": 105.1,
+      "db_cpu_mean_pct": 11.1,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 105.1,
+          "cpu_max_pct": 126.5,
+          "mem_max_mib": 77.2,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 11.1,
+          "cpu_max_pct": 15.0,
+          "mem_max_mib": 287.7,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 2.9,
+          "cpu_max_pct": 9.6,
+          "mem_max_mib": 335.3,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "hourly",
+      "arch": "lambda",
+      "conc": 10,
+      "rep": 2,
+      "requests": 15049,
+      "rps": 501.3686666467993,
+      "p50_ms": 19.009702,
+      "p95_ms": 24.896987999999997,
+      "p99_ms": 33.815651,
+      "error_rate": 0.0,
+      "status": {
+        "200": 15049
+      },
+      "errors": {},
+      "bytes_per_request": 20812,
+      "api_cpu_mean_pct": 105.2,
+      "db_cpu_mean_pct": 69.7,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 105.2,
+          "cpu_max_pct": 139.0,
+          "mem_max_mib": 61.5,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 69.7,
+          "cpu_max_pct": 74.8,
+          "mem_max_mib": 288.1,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 3.0,
+          "cpu_max_pct": 9.6,
+          "mem_max_mib": 340.0,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "hourly",
+      "arch": "lambda",
+      "conc": 50,
+      "rep": 2,
+      "requests": 1840,
+      "rps": 60.05348080880023,
+      "p50_ms": 827.09713,
+      "p95_ms": 933.779061,
+      "p99_ms": 957.486007,
+      "error_rate": 0.0,
+      "status": {
+        "200": 1840
+      },
+      "errors": {},
+      "bytes_per_request": 20832,
+      "api_cpu_mean_pct": 105.7,
+      "db_cpu_mean_pct": 10.4,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 105.7,
+          "cpu_max_pct": 125.2,
+          "mem_max_mib": 77.6,
+          "samples": 16
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 10.4,
+          "cpu_max_pct": 15.2,
+          "mem_max_mib": 288.3,
+          "samples": 16
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 2.8,
+          "cpu_max_pct": 9.5,
+          "mem_max_mib": 335.2,
+          "samples": 16
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "hourly",
+      "arch": "lambda",
+      "conc": 50,
+      "rep": 2,
+      "requests": 12235,
+      "rps": 406.5819077237089,
+      "p50_ms": 119.114663,
+      "p95_ms": 149.49626899999998,
+      "p99_ms": 166.825577,
+      "error_rate": 0.0,
+      "status": {
+        "200": 12235
+      },
+      "errors": {},
+      "bytes_per_request": 20812,
+      "api_cpu_mean_pct": 103.4,
+      "db_cpu_mean_pct": 57.0,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 103.4,
+          "cpu_max_pct": 130.3,
+          "mem_max_mib": 63.6,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 57.0,
+          "cpu_max_pct": 63.5,
+          "mem_max_mib": 287.5,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 3.4,
+          "cpu_max_pct": 9.7,
+          "mem_max_mib": 335.3,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "hourly",
+      "arch": "kappa",
+      "conc": 10,
+      "rep": 2,
+      "requests": 1922,
+      "rps": 63.765696517697656,
+      "p50_ms": 149.56278,
+      "p95_ms": 196.213965,
+      "p99_ms": 225.31328200000002,
+      "error_rate": 0.0,
+      "status": {
+        "200": 1922
+      },
+      "errors": {},
+      "bytes_per_request": 20832,
+      "api_cpu_mean_pct": 109.0,
+      "db_cpu_mean_pct": 6.7,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 109.0,
+          "cpu_max_pct": 133.7,
+          "mem_max_mib": 77.2,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 6.7,
+          "cpu_max_pct": 10.8,
+          "mem_max_mib": 288.2,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 3.8,
+          "cpu_max_pct": 9.5,
+          "mem_max_mib": 345.7,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "hourly",
+      "arch": "kappa",
+      "conc": 10,
+      "rep": 2,
+      "requests": 14548,
+      "rps": 484.6846030018579,
+      "p50_ms": 18.072898000000002,
+      "p95_ms": 33.108656,
+      "p99_ms": 58.837936,
+      "error_rate": 0.0,
+      "status": {
+        "200": 14548
+      },
+      "errors": {},
+      "bytes_per_request": 20812,
+      "api_cpu_mean_pct": 105.7,
+      "db_cpu_mean_pct": 34.3,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 105.7,
+          "cpu_max_pct": 133.3,
+          "mem_max_mib": 51.7,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 34.3,
+          "cpu_max_pct": 38.9,
+          "mem_max_mib": 287.3,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 2.9,
+          "cpu_max_pct": 9.6,
+          "mem_max_mib": 334.8,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "hourly",
+      "arch": "kappa",
+      "conc": 50,
+      "rep": 2,
+      "requests": 1934,
+      "rps": 63.27613048576725,
+      "p50_ms": 785.6266469999999,
+      "p95_ms": 878.403409,
+      "p99_ms": 940.6065930000001,
+      "error_rate": 0.0,
+      "status": {
+        "200": 1934
+      },
+      "errors": {},
+      "bytes_per_request": 20832,
+      "api_cpu_mean_pct": 104.5,
+      "db_cpu_mean_pct": 6.8,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 104.5,
+          "cpu_max_pct": 128.9,
+          "mem_max_mib": 77.1,
+          "samples": 16
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 6.8,
+          "cpu_max_pct": 11.9,
+          "mem_max_mib": 288.0,
+          "samples": 16
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 3.8,
+          "cpu_max_pct": 9.9,
+          "mem_max_mib": 335.5,
+          "samples": 16
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "hourly",
+      "arch": "kappa",
+      "conc": 50,
+      "rep": 2,
+      "requests": 14925,
+      "rps": 495.99644752888105,
+      "p50_ms": 94.75510600000001,
+      "p95_ms": 128.91222299999998,
+      "p99_ms": 160.817451,
+      "error_rate": 0.0,
+      "status": {
+        "200": 14925
+      },
+      "errors": {},
+      "bytes_per_request": 20812,
+      "api_cpu_mean_pct": 106.6,
+      "db_cpu_mean_pct": 37.0,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 106.6,
+          "cpu_max_pct": 127.2,
+          "mem_max_mib": 64.4,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 37.0,
+          "cpu_max_pct": 41.5,
+          "mem_max_mib": 287.6,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 3.5,
+          "cpu_max_pct": 11.6,
+          "mem_max_mib": 346.3,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "top-sedes",
+      "arch": "lambda",
+      "conc": 10,
+      "rep": 2,
+      "requests": 1863,
+      "rps": 61.838173896360864,
+      "p50_ms": 159.151872,
+      "p95_ms": 216.006324,
+      "p99_ms": 253.738146,
+      "error_rate": 0.0,
+      "status": {
+        "200": 1863
+      },
+      "errors": {},
+      "bytes_per_request": 360,
+      "api_cpu_mean_pct": 95.6,
+      "db_cpu_mean_pct": 783.1,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 95.6,
+          "cpu_max_pct": 144.7,
+          "mem_max_mib": 65.1,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 783.1,
+          "cpu_max_pct": 879.8,
+          "mem_max_mib": 340.9,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 6.6,
+          "cpu_max_pct": 23.3,
+          "mem_max_mib": 337.8,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "top-sedes",
+      "arch": "lambda",
+      "conc": 10,
+      "rep": 2,
+      "requests": 2084,
+      "rps": 69.1787183913917,
+      "p50_ms": 145.152964,
+      "p95_ms": 176.860709,
+      "p99_ms": 189.440142,
+      "error_rate": 0.0,
+      "status": {
+        "200": 2084
+      },
+      "errors": {},
+      "bytes_per_request": 343,
+      "api_cpu_mean_pct": 31.6,
+      "db_cpu_mean_pct": 938.3,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 31.6,
+          "cpu_max_pct": 48.6,
+          "mem_max_mib": 60.3,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 938.3,
+          "cpu_max_pct": 989.5,
+          "mem_max_mib": 353.3,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 6.7,
+          "cpu_max_pct": 22.4,
+          "mem_max_mib": 334.6,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "top-sedes",
+      "arch": "lambda",
+      "conc": 50,
+      "rep": 2,
+      "requests": 1924,
+      "rps": 62.612528998907784,
+      "p50_ms": 786.694585,
+      "p95_ms": 941.295258,
+      "p99_ms": 981.0892879999999,
+      "error_rate": 0.0,
+      "status": {
+        "200": 1924
+      },
+      "errors": {},
+      "bytes_per_request": 360,
+      "api_cpu_mean_pct": 97.0,
+      "db_cpu_mean_pct": 722.3,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 97.0,
+          "cpu_max_pct": 152.4,
+          "mem_max_mib": 78.0,
+          "samples": 16
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 722.3,
+          "cpu_max_pct": 893.5,
+          "mem_max_mib": 351.9,
+          "samples": 16
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 6.0,
+          "cpu_max_pct": 22.1,
+          "mem_max_mib": 338.4,
+          "samples": 16
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "top-sedes",
+      "arch": "lambda",
+      "conc": 50,
+      "rep": 2,
+      "requests": 2098,
+      "rps": 68.19703504345752,
+      "p50_ms": 726.234394,
+      "p95_ms": 818.8897969999999,
+      "p99_ms": 870.71644,
+      "error_rate": 0.0,
+      "status": {
+        "200": 2098
+      },
+      "errors": {},
+      "bytes_per_request": 343,
+      "api_cpu_mean_pct": 46.9,
+      "db_cpu_mean_pct": 883.8,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 46.9,
+          "cpu_max_pct": 107.5,
+          "mem_max_mib": 64.3,
+          "samples": 16
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 883.8,
+          "cpu_max_pct": 997.2,
+          "mem_max_mib": 350.9,
+          "samples": 16
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 5.8,
+          "cpu_max_pct": 21.2,
+          "mem_max_mib": 336.6,
+          "samples": 16
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "top-sedes",
+      "arch": "kappa",
+      "conc": 10,
+      "rep": 2,
+      "requests": 4704,
+      "rps": 156.61388169699612,
+      "p50_ms": 56.818509000000006,
+      "p95_ms": 107.54066499999999,
+      "p99_ms": 142.391341,
+      "error_rate": 0.0,
+      "status": {
+        "200": 4704
+      },
+      "errors": {},
+      "bytes_per_request": 360,
+      "api_cpu_mean_pct": 108.3,
+      "db_cpu_mean_pct": 285.8,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 108.3,
+          "cpu_max_pct": 151.6,
+          "mem_max_mib": 76.8,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 285.8,
+          "cpu_max_pct": 316.3,
+          "mem_max_mib": 291.1,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 4.1,
+          "cpu_max_pct": 11.3,
+          "mem_max_mib": 335.7,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "top-sedes",
+      "arch": "kappa",
+      "conc": 10,
+      "rep": 2,
+      "requests": 6708,
+      "rps": 223.34308526266102,
+      "p50_ms": 45.055735999999996,
+      "p95_ms": 57.601141,
+      "p99_ms": 61.290903,
+      "error_rate": 0.0,
+      "status": {
+        "200": 6708
+      },
+      "errors": {},
+      "bytes_per_request": 343,
+      "api_cpu_mean_pct": 74.2,
+      "db_cpu_mean_pct": 865.1,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 74.2,
+          "cpu_max_pct": 138.8,
+          "mem_max_mib": 62.7,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 865.1,
+          "cpu_max_pct": 904.3,
+          "mem_max_mib": 289.9,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 6.7,
+          "cpu_max_pct": 19.8,
+          "mem_max_mib": 342.3,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "top-sedes",
+      "arch": "kappa",
+      "conc": 50,
+      "rep": 2,
+      "requests": 4628,
+      "rps": 153.24709867034775,
+      "p50_ms": 322.011318,
+      "p95_ms": 410.75989000000004,
+      "p99_ms": 488.232511,
+      "error_rate": 0.0,
+      "status": {
+        "200": 4628
+      },
+      "errors": {},
+      "bytes_per_request": 360,
+      "api_cpu_mean_pct": 109.5,
+      "db_cpu_mean_pct": 257.0,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 109.5,
+          "cpu_max_pct": 138.8,
+          "mem_max_mib": 76.6,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 257.0,
+          "cpu_max_pct": 323.1,
+          "mem_max_mib": 289.9,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 4.7,
+          "cpu_max_pct": 11.6,
+          "mem_max_mib": 335.9,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "top-sedes",
+      "arch": "kappa",
+      "conc": 50,
+      "rep": 2,
+      "requests": 6793,
+      "rps": 224.70235982643223,
+      "p50_ms": 221.690641,
+      "p95_ms": 256.19401400000004,
+      "p99_ms": 265.854301,
+      "error_rate": 0.0,
+      "status": {
+        "200": 6793
+      },
+      "errors": {},
+      "bytes_per_request": 343,
+      "api_cpu_mean_pct": 66.3,
+      "db_cpu_mean_pct": 845.9,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 66.3,
+          "cpu_max_pct": 75.5,
+          "mem_max_mib": 51.6,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 845.9,
+          "cpu_max_pct": 901.5,
+          "mem_max_mib": 292.8,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 6.5,
+          "cpu_max_pct": 20.1,
+          "mem_max_mib": 335.4,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "post-events",
+      "arch": null,
+      "conc": 10,
+      "rep": 2,
+      "requests": 4670,
+      "rps": 155.28708038583966,
+      "p50_ms": 57.600096,
+      "p95_ms": 128.691505,
+      "p99_ms": 173.939232,
+      "error_rate": 0.0,
+      "status": {
+        "200": 4670
+      },
+      "errors": {},
+      "bytes_per_request": 28,
+      "api_cpu_mean_pct": 114.0,
+      "db_cpu_mean_pct": 1.7,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 114.0,
+          "cpu_max_pct": 150.9,
+          "mem_max_mib": 73.3,
+          "samples": 16
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 1.7,
+          "cpu_max_pct": 5.7,
+          "mem_max_mib": 290.3,
+          "samples": 16
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 16.8,
+          "cpu_max_pct": 24.4,
+          "mem_max_mib": 344.9,
+          "samples": 16
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "post-events",
+      "arch": null,
+      "conc": 10,
+      "rep": 2,
+      "requests": 11509,
+      "rps": 383.4315799819742,
+      "p50_ms": 20.52613,
+      "p95_ms": 65.137277,
+      "p99_ms": 99.155603,
+      "error_rate": 0.0,
+      "status": {
+        "202": 11509
+      },
+      "errors": {},
+      "bytes_per_request": 15,
+      "api_cpu_mean_pct": 133.2,
+      "db_cpu_mean_pct": 2.3,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 133.2,
+          "cpu_max_pct": 167.8,
+          "mem_max_mib": 59.8,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 2.3,
+          "cpu_max_pct": 7.5,
+          "mem_max_mib": 289.9,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 33.0,
+          "cpu_max_pct": 46.0,
+          "mem_max_mib": 371.4,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "post-events",
+      "arch": null,
+      "conc": 50,
+      "rep": 2,
+      "requests": 4611,
+      "rps": 152.15013672139023,
+      "p50_ms": 336.492045,
+      "p95_ms": 429.114038,
+      "p99_ms": 466.55198399999995,
+      "error_rate": 0.0,
+      "status": {
+        "200": 4611
+      },
+      "errors": {},
+      "bytes_per_request": 28,
+      "api_cpu_mean_pct": 128.1,
+      "db_cpu_mean_pct": 1.7,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 128.1,
+          "cpu_max_pct": 156.7,
+          "mem_max_mib": 78.2,
+          "samples": 16
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 1.7,
+          "cpu_max_pct": 6.2,
+          "mem_max_mib": 289.9,
+          "samples": 16
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 16.8,
+          "cpu_max_pct": 25.8,
+          "mem_max_mib": 382.0,
+          "samples": 16
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "post-events",
+      "arch": null,
+      "conc": 50,
+      "rep": 2,
+      "requests": 14385,
+      "rps": 478.8612531357903,
+      "p50_ms": 95.97842700000001,
+      "p95_ms": 174.858128,
+      "p99_ms": 306.012954,
+      "error_rate": 0.0,
+      "status": {
+        "202": 14385
+      },
+      "errors": {},
+      "bytes_per_request": 15,
+      "api_cpu_mean_pct": 148.0,
+      "db_cpu_mean_pct": 1.9,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 148.0,
+          "cpu_max_pct": 180.5,
+          "mem_max_mib": 62.8,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 1.9,
+          "cpu_max_pct": 7.1,
+          "mem_max_mib": 290.6,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 30.9,
+          "cpu_max_pct": 40.5,
+          "mem_max_mib": 408.6,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "hourly",
+      "arch": "lambda",
+      "conc": 10,
+      "rep": 3,
+      "requests": 13791,
+      "rps": 459.22105983478224,
+      "p50_ms": 20.270494,
+      "p95_ms": 29.276225999999998,
+      "p99_ms": 42.355473999999994,
+      "error_rate": 0.0,
+      "status": {
+        "200": 13791
+      },
+      "errors": {},
+      "bytes_per_request": 20812,
+      "api_cpu_mean_pct": 108.8,
+      "db_cpu_mean_pct": 64.9,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 108.8,
+          "cpu_max_pct": 129.0,
+          "mem_max_mib": 64.3,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 64.9,
+          "cpu_max_pct": 74.6,
+          "mem_max_mib": 290.3,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 4.1,
+          "cpu_max_pct": 15.5,
+          "mem_max_mib": 421.8,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "hourly",
+      "arch": "lambda",
+      "conc": 10,
+      "rep": 3,
+      "requests": 1935,
+      "rps": 64.21174459801523,
+      "p50_ms": 150.33479,
+      "p95_ms": 188.521722,
+      "p99_ms": 218.75459,
+      "error_rate": 0.0,
+      "status": {
+        "200": 1935
+      },
+      "errors": {},
+      "bytes_per_request": 20832,
+      "api_cpu_mean_pct": 106.7,
+      "db_cpu_mean_pct": 11.3,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 106.7,
+          "cpu_max_pct": 126.7,
+          "mem_max_mib": 78.0,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 11.3,
+          "cpu_max_pct": 15.3,
+          "mem_max_mib": 290.9,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 3.6,
+          "cpu_max_pct": 10.6,
+          "mem_max_mib": 410.2,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "hourly",
+      "arch": "lambda",
+      "conc": 50,
+      "rep": 3,
+      "requests": 14003,
+      "rps": 465.3904741470204,
+      "p50_ms": 104.56791799999999,
+      "p95_ms": 129.36371899999997,
+      "p99_ms": 140.977725,
+      "error_rate": 0.0,
+      "status": {
+        "200": 14003
+      },
+      "errors": {},
+      "bytes_per_request": 20812,
+      "api_cpu_mean_pct": 107.8,
+      "db_cpu_mean_pct": 64.8,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 107.8,
+          "cpu_max_pct": 126.8,
+          "mem_max_mib": 62.8,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 64.8,
+          "cpu_max_pct": 70.9,
+          "mem_max_mib": 290.6,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 3.3,
+          "cpu_max_pct": 9.6,
+          "mem_max_mib": 422.0,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "hourly",
+      "arch": "lambda",
+      "conc": 50,
+      "rep": 3,
+      "requests": 1833,
+      "rps": 59.88951075318665,
+      "p50_ms": 830.596942,
+      "p95_ms": 903.709156,
+      "p99_ms": 1004.9786570000001,
+      "error_rate": 0.0,
+      "status": {
+        "200": 1833
+      },
+      "errors": {},
+      "bytes_per_request": 20832,
+      "api_cpu_mean_pct": 103.9,
+      "db_cpu_mean_pct": 10.9,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 103.9,
+          "cpu_max_pct": 134.4,
+          "mem_max_mib": 77.4,
+          "samples": 16
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 10.9,
+          "cpu_max_pct": 15.3,
+          "mem_max_mib": 291.3,
+          "samples": 16
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 4.1,
+          "cpu_max_pct": 9.8,
+          "mem_max_mib": 417.1,
+          "samples": 16
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "hourly",
+      "arch": "kappa",
+      "conc": 10,
+      "rep": 3,
+      "requests": 14536,
+      "rps": 484.36942015439513,
+      "p50_ms": 19.565418,
+      "p95_ms": 26.440176,
+      "p99_ms": 46.072619,
+      "error_rate": 0.0,
+      "status": {
+        "200": 14536
+      },
+      "errors": {},
+      "bytes_per_request": 20812,
+      "api_cpu_mean_pct": 106.4,
+      "db_cpu_mean_pct": 33.6,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 106.4,
+          "cpu_max_pct": 126.0,
+          "mem_max_mib": 64.4,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 33.6,
+          "cpu_max_pct": 38.1,
+          "mem_max_mib": 290.5,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 3.4,
+          "cpu_max_pct": 10.8,
+          "mem_max_mib": 410.3,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "hourly",
+      "arch": "kappa",
+      "conc": 10,
+      "rep": 3,
+      "requests": 1939,
+      "rps": 64.31625320384869,
+      "p50_ms": 147.78129,
+      "p95_ms": 198.895978,
+      "p99_ms": 226.871735,
+      "error_rate": 0.0,
+      "status": {
+        "200": 1939
+      },
+      "errors": {},
+      "bytes_per_request": 20832,
+      "api_cpu_mean_pct": 108.7,
+      "db_cpu_mean_pct": 7.4,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 108.7,
+          "cpu_max_pct": 128.2,
+          "mem_max_mib": 77.3,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 7.4,
+          "cpu_max_pct": 12.1,
+          "mem_max_mib": 290.8,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 3.5,
+          "cpu_max_pct": 10.3,
+          "mem_max_mib": 410.4,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "hourly",
+      "arch": "kappa",
+      "conc": 50,
+      "rep": 3,
+      "requests": 14612,
+      "rps": 485.567944631509,
+      "p50_ms": 96.964695,
+      "p95_ms": 135.46524300000002,
+      "p99_ms": 159.513607,
+      "error_rate": 0.0,
+      "status": {
+        "200": 14612
+      },
+      "errors": {},
+      "bytes_per_request": 20812,
+      "api_cpu_mean_pct": 107.5,
+      "db_cpu_mean_pct": 36.3,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 107.5,
+          "cpu_max_pct": 137.1,
+          "mem_max_mib": 64.4,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 36.3,
+          "cpu_max_pct": 41.4,
+          "mem_max_mib": 293.0,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 3.6,
+          "cpu_max_pct": 12.9,
+          "mem_max_mib": 423.5,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "hourly",
+      "arch": "kappa",
+      "conc": 50,
+      "rep": 3,
+      "requests": 1981,
+      "rps": 64.70913938718142,
+      "p50_ms": 767.558722,
+      "p95_ms": 837.5297400000001,
+      "p99_ms": 868.20923,
+      "error_rate": 0.0,
+      "status": {
+        "200": 1981
+      },
+      "errors": {},
+      "bytes_per_request": 20832,
+      "api_cpu_mean_pct": 102.9,
+      "db_cpu_mean_pct": 6.1,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 102.9,
+          "cpu_max_pct": 126.8,
+          "mem_max_mib": 77.4,
+          "samples": 16
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 6.1,
+          "cpu_max_pct": 10.6,
+          "mem_max_mib": 291.1,
+          "samples": 16
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 3.1,
+          "cpu_max_pct": 9.7,
+          "mem_max_mib": 420.6,
+          "samples": 16
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "top-sedes",
+      "arch": "lambda",
+      "conc": 10,
+      "rep": 3,
+      "requests": 2052,
+      "rps": 68.11446822471767,
+      "p50_ms": 147.98676,
+      "p95_ms": 176.050459,
+      "p99_ms": 194.283495,
+      "error_rate": 0.0,
+      "status": {
+        "200": 2052
+      },
+      "errors": {},
+      "bytes_per_request": 343,
+      "api_cpu_mean_pct": 60.8,
+      "db_cpu_mean_pct": 905.6,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 60.8,
+          "cpu_max_pct": 116.3,
+          "mem_max_mib": 63.6,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 905.6,
+          "cpu_max_pct": 986.0,
+          "mem_max_mib": 354.2,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 7.3,
+          "cpu_max_pct": 24.9,
+          "mem_max_mib": 409.8,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "top-sedes",
+      "arch": "lambda",
+      "conc": 10,
+      "rep": 3,
+      "requests": 1848,
+      "rps": 61.29511510422679,
+      "p50_ms": 160.149351,
+      "p95_ms": 230.213769,
+      "p99_ms": 278.348996,
+      "error_rate": 0.0,
+      "status": {
+        "200": 1848
+      },
+      "errors": {},
+      "bytes_per_request": 360,
+      "api_cpu_mean_pct": 107.1,
+      "db_cpu_mean_pct": 806.7,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 107.1,
+          "cpu_max_pct": 160.6,
+          "mem_max_mib": 77.2,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 806.7,
+          "cpu_max_pct": 885.0,
+          "mem_max_mib": 349.2,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 7.2,
+          "cpu_max_pct": 20.7,
+          "mem_max_mib": 410.6,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "top-sedes",
+      "arch": "lambda",
+      "conc": 50,
+      "rep": 3,
+      "requests": 2130,
+      "rps": 69.44194267122194,
+      "p50_ms": 718.11095,
+      "p95_ms": 794.611642,
+      "p99_ms": 831.412649,
+      "error_rate": 0.0,
+      "status": {
+        "200": 2130
+      },
+      "errors": {},
+      "bytes_per_request": 343,
+      "api_cpu_mean_pct": 50.4,
+      "db_cpu_mean_pct": 975.2,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 50.4,
+          "cpu_max_pct": 118.7,
+          "mem_max_mib": 64.4,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 975.2,
+          "cpu_max_pct": 989.9,
+          "mem_max_mib": 355.7,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 8.2,
+          "cpu_max_pct": 23.6,
+          "mem_max_mib": 410.0,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "top-sedes",
+      "arch": "lambda",
+      "conc": 50,
+      "rep": 3,
+      "requests": 1947,
+      "rps": 63.425022984747834,
+      "p50_ms": 774.704737,
+      "p95_ms": 902.25389,
+      "p99_ms": 1151.533025,
+      "error_rate": 0.0,
+      "status": {
+        "200": 1947
+      },
+      "errors": {},
+      "bytes_per_request": 360,
+      "api_cpu_mean_pct": 92.3,
+      "db_cpu_mean_pct": 708.2,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 92.3,
+          "cpu_max_pct": 160.8,
+          "mem_max_mib": 77.6,
+          "samples": 16
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 708.2,
+          "cpu_max_pct": 887.3,
+          "mem_max_mib": 350.5,
+          "samples": 16
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 6.6,
+          "cpu_max_pct": 20.5,
+          "mem_max_mib": 410.5,
+          "samples": 16
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "top-sedes",
+      "arch": "kappa",
+      "conc": 10,
+      "rep": 3,
+      "requests": 6796,
+      "rps": 226.20577048010708,
+      "p50_ms": 44.642638,
+      "p95_ms": 57.207877999999994,
+      "p99_ms": 61.006312,
+      "error_rate": 0.0,
+      "status": {
+        "200": 6796
+      },
+      "errors": {},
+      "bytes_per_request": 343,
+      "api_cpu_mean_pct": 79.6,
+      "db_cpu_mean_pct": 868.5,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 79.6,
+          "cpu_max_pct": 132.1,
+          "mem_max_mib": 62.6,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 868.5,
+          "cpu_max_pct": 920.9,
+          "mem_max_mib": 294.5,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 5.5,
+          "cpu_max_pct": 21.9,
+          "mem_max_mib": 411.6,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "top-sedes",
+      "arch": "kappa",
+      "conc": 10,
+      "rep": 3,
+      "requests": 5081,
+      "rps": 169.17406704963525,
+      "p50_ms": 53.782899,
+      "p95_ms": 97.798652,
+      "p99_ms": 115.99005,
+      "error_rate": 0.0,
+      "status": {
+        "200": 5081
+      },
+      "errors": {},
+      "bytes_per_request": 360,
+      "api_cpu_mean_pct": 108.5,
+      "db_cpu_mean_pct": 277.8,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 108.5,
+          "cpu_max_pct": 137.4,
+          "mem_max_mib": 75.5,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 277.8,
+          "cpu_max_pct": 309.6,
+          "mem_max_mib": 292.6,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 4.1,
+          "cpu_max_pct": 11.6,
+          "mem_max_mib": 410.7,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "top-sedes",
+      "arch": "kappa",
+      "conc": 50,
+      "rep": 3,
+      "requests": 6761,
+      "rps": 223.76035298470313,
+      "p50_ms": 224.597178,
+      "p95_ms": 254.528137,
+      "p99_ms": 277.783033,
+      "error_rate": 0.0,
+      "status": {
+        "200": 6761
+      },
+      "errors": {},
+      "bytes_per_request": 343,
+      "api_cpu_mean_pct": 99.8,
+      "db_cpu_mean_pct": 870.5,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 99.8,
+          "cpu_max_pct": 145.9,
+          "mem_max_mib": 64.6,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 870.5,
+          "cpu_max_pct": 906.6,
+          "mem_max_mib": 295.2,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 8.3,
+          "cpu_max_pct": 19.3,
+          "mem_max_mib": 416.1,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "top-sedes",
+      "arch": "kappa",
+      "conc": 50,
+      "rep": 3,
+      "requests": 4868,
+      "rps": 161.36718550255847,
+      "p50_ms": 303.875838,
+      "p95_ms": 388.27486300000004,
+      "p99_ms": 437.54345900000004,
+      "error_rate": 0.0,
+      "status": {
+        "200": 4868
+      },
+      "errors": {},
+      "bytes_per_request": 360,
+      "api_cpu_mean_pct": 108.3,
+      "db_cpu_mean_pct": 294.6,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 108.3,
+          "cpu_max_pct": 140.5,
+          "mem_max_mib": 76.1,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 294.6,
+          "cpu_max_pct": 367.0,
+          "mem_max_mib": 293.4,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 4.4,
+          "cpu_max_pct": 13.3,
+          "mem_max_mib": 410.4,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "post-events",
+      "arch": null,
+      "conc": 10,
+      "rep": 3,
+      "requests": 11843,
+      "rps": 394.5509999872141,
+      "p50_ms": 19.895599999999998,
+      "p95_ms": 62.785047,
+      "p99_ms": 95.074601,
+      "error_rate": 0.0,
+      "status": {
+        "202": 11843
+      },
+      "errors": {},
+      "bytes_per_request": 15,
+      "api_cpu_mean_pct": 130.6,
+      "db_cpu_mean_pct": 1.9,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 130.6,
+          "cpu_max_pct": 159.0,
+          "mem_max_mib": 60.0,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 1.9,
+          "cpu_max_pct": 7.3,
+          "mem_max_mib": 292.1,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 32.4,
+          "cpu_max_pct": 41.0,
+          "mem_max_mib": 439.2,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "post-events",
+      "arch": null,
+      "conc": 10,
+      "rep": 3,
+      "requests": 4641,
+      "rps": 154.52794433725643,
+      "p50_ms": 57.806049,
+      "p95_ms": 130.14184600000002,
+      "p99_ms": 181.096534,
+      "error_rate": 0.0,
+      "status": {
+        "200": 4641
+      },
+      "errors": {},
+      "bytes_per_request": 28,
+      "api_cpu_mean_pct": 128.5,
+      "db_cpu_mean_pct": 1.9,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 128.5,
+          "cpu_max_pct": 149.8,
+          "mem_max_mib": 78.4,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 1.9,
+          "cpu_max_pct": 6.8,
+          "mem_max_mib": 291.7,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 18.7,
+          "cpu_max_pct": 28.8,
+          "mem_max_mib": 447.7,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "rest",
+      "scenario": "post-events",
+      "arch": null,
+      "conc": 50,
+      "rep": 3,
+      "requests": 15090,
+      "rps": 501.8580942076532,
+      "p50_ms": 96.117714,
+      "p95_ms": 148.77412,
+      "p99_ms": 186.14289300000002,
+      "error_rate": 0.0,
+      "status": {
+        "202": 15090
+      },
+      "errors": {},
+      "bytes_per_request": 15,
+      "api_cpu_mean_pct": 149.7,
+      "db_cpu_mean_pct": 2.1,
+      "resources": {
+        "lkbench-api-rest-1": {
+          "cpu_mean_pct": 149.7,
+          "cpu_max_pct": 182.0,
+          "mem_max_mib": 60.1,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 2.1,
+          "cpu_max_pct": 7.6,
+          "mem_max_mib": 291.5,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 33.6,
+          "cpu_max_pct": 42.4,
+          "mem_max_mib": 478.3,
+          "samples": 15
+        }
+      }
+    },
+    {
+      "api": "graphql",
+      "scenario": "post-events",
+      "arch": null,
+      "conc": 50,
+      "rep": 3,
+      "requests": 4418,
+      "rps": 147.0114221082438,
+      "p50_ms": 309.56526299999996,
+      "p95_ms": 672.081037,
+      "p99_ms": 995.9204149999999,
+      "error_rate": 0.0,
+      "status": {
+        "200": 4418
+      },
+      "errors": {},
+      "bytes_per_request": 28,
+      "api_cpu_mean_pct": 121.4,
+      "db_cpu_mean_pct": 2.2,
+      "resources": {
+        "lkbench-api-graphql-1": {
+          "cpu_mean_pct": 121.4,
+          "cpu_max_pct": 150.2,
+          "mem_max_mib": 77.3,
+          "samples": 15
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 2.2,
+          "cpu_max_pct": 7.9,
+          "mem_max_mib": 292.1,
+          "samples": 15
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 17.2,
+          "cpu_max_pct": 29.2,
+          "mem_max_mib": 488.8,
+          "samples": 15
+        }
+      }
+    }
+  ],
+  "summary": [
+    {
+      "api": "graphql",
+      "scenario": "hourly",
+      "arch": "kappa",
+      "conc": 10,
+      "reps": 3,
+      "rps": 64.31625320384869,
+      "p50_ms": 147.78129,
+      "p95_ms": 196.213965,
+      "p99_ms": 225.31328200000002,
+      "error_rate": 0.0,
+      "api_cpu_mean_pct": 108.7,
+      "db_cpu_mean_pct": 6.8
+    },
+    {
+      "api": "graphql",
+      "scenario": "hourly",
+      "arch": "kappa",
+      "conc": 50,
+      "reps": 3,
+      "rps": 63.27613048576725,
+      "p50_ms": 785.6266469999999,
+      "p95_ms": 878.403409,
+      "p99_ms": 940.6065930000001,
+      "error_rate": 0.0,
+      "api_cpu_mean_pct": 102.9,
+      "db_cpu_mean_pct": 6.4
+    },
+    {
+      "api": "graphql",
+      "scenario": "hourly",
+      "arch": "lambda",
+      "conc": 10,
+      "reps": 3,
+      "rps": 63.88714288022567,
+      "p50_ms": 150.33479,
+      "p95_ms": 199.43655199999998,
+      "p99_ms": 219.038654,
+      "error_rate": 0.0,
+      "api_cpu_mean_pct": 106.7,
+      "db_cpu_mean_pct": 11.3
+    },
+    {
+      "api": "graphql",
+      "scenario": "hourly",
+      "arch": "lambda",
+      "conc": 50,
+      "reps": 3,
+      "rps": 59.88951075318665,
+      "p50_ms": 830.596942,
+      "p95_ms": 933.779061,
+      "p99_ms": 1004.9786570000001,
+      "error_rate": 0.0,
+      "api_cpu_mean_pct": 104.7,
+      "db_cpu_mean_pct": 10.9
+    },
+    {
+      "api": "graphql",
+      "scenario": "post-events",
+      "arch": "-",
+      "conc": 10,
+      "reps": 3,
+      "rps": 155.28708038583966,
+      "p50_ms": 57.806049,
+      "p95_ms": 128.691505,
+      "p99_ms": 177.93521800000002,
+      "error_rate": 0.0,
+      "api_cpu_mean_pct": 128.2,
+      "db_cpu_mean_pct": 1.8
+    },
+    {
+      "api": "graphql",
+      "scenario": "post-events",
+      "arch": "-",
+      "conc": 50,
+      "reps": 3,
+      "rps": 147.0114221082438,
+      "p50_ms": 336.492045,
+      "p95_ms": 437.70112900000004,
+      "p99_ms": 491.420699,
+      "error_rate": 0.0,
+      "api_cpu_mean_pct": 128.1,
+      "db_cpu_mean_pct": 1.7
+    },
+    {
+      "api": "graphql",
+      "scenario": "top-sedes",
+      "arch": "kappa",
+      "conc": 10,
+      "reps": 3,
+      "rps": 165.4365814654008,
+      "p50_ms": 54.874477,
+      "p95_ms": 98.316393,
+      "p99_ms": 120.303039,
+      "error_rate": 0.0,
+      "api_cpu_mean_pct": 108.5,
+      "db_cpu_mean_pct": 278.5
+    },
+    {
+      "api": "graphql",
+      "scenario": "top-sedes",
+      "arch": "kappa",
+      "conc": 50,
+      "reps": 3,
+      "rps": 156.90327937408648,
+      "p50_ms": 315.516564,
+      "p95_ms": 392.25049099999995,
+      "p99_ms": 438.38454,
+      "error_rate": 0.0,
+      "api_cpu_mean_pct": 109.5,
+      "db_cpu_mean_pct": 257.0
+    },
+    {
+      "api": "graphql",
+      "scenario": "top-sedes",
+      "arch": "lambda",
+      "conc": 10,
+      "reps": 3,
+      "rps": 61.838173896360864,
+      "p50_ms": 159.151872,
+      "p95_ms": 216.006324,
+      "p99_ms": 253.738146,
+      "error_rate": 0.0,
+      "api_cpu_mean_pct": 102.5,
+      "db_cpu_mean_pct": 803.0
+    },
+    {
+      "api": "graphql",
+      "scenario": "top-sedes",
+      "arch": "lambda",
+      "conc": 50,
+      "reps": 3,
+      "rps": 62.77348496166466,
+      "p50_ms": 782.694529,
+      "p95_ms": 941.295258,
+      "p99_ms": 1000.1772840000001,
+      "error_rate": 0.0,
+      "api_cpu_mean_pct": 94.4,
+      "db_cpu_mean_pct": 722.3
+    },
+    {
+      "api": "rest",
+      "scenario": "hourly",
+      "arch": "kappa",
+      "conc": 10,
+      "reps": 3,
+      "rps": 484.6846030018579,
+      "p50_ms": 18.417333,
+      "p95_ms": 26.440176,
+      "p99_ms": 46.072619,
+      "error_rate": 0.0,
+      "api_cpu_mean_pct": 105.9,
+      "db_cpu_mean_pct": 34.3
+    },
+    {
+      "api": "rest",
+      "scenario": "hourly",
+      "arch": "kappa",
+      "conc": 50,
+      "reps": 3,
+      "rps": 495.99644752888105,
+      "p50_ms": 94.75510600000001,
+      "p95_ms": 128.91222299999998,
+      "p99_ms": 159.513607,
+      "error_rate": 0.0,
+      "api_cpu_mean_pct": 107.2,
+      "db_cpu_mean_pct": 36.3
+    },
+    {
+      "api": "rest",
+      "scenario": "hourly",
+      "arch": "lambda",
+      "conc": 10,
+      "reps": 3,
+      "rps": 489.74422006490767,
+      "p50_ms": 19.171865999999998,
+      "p95_ms": 26.936838,
+      "p99_ms": 36.666453000000004,
+      "error_rate": 0.0,
+      "api_cpu_mean_pct": 106.8,
+      "db_cpu_mean_pct": 69.7
+    },
+    {
+      "api": "rest",
+      "scenario": "hourly",
+      "arch": "lambda",
+      "conc": 50,
+      "reps": 3,
+      "rps": 459.77679561142975,
+      "p50_ms": 104.56791799999999,
+      "p95_ms": 134.484417,
+      "p99_ms": 154.43875000000003,
+      "error_rate": 0.0,
+      "api_cpu_mean_pct": 104.8,
+      "db_cpu_mean_pct": 64.8
+    },
+    {
+      "api": "rest",
+      "scenario": "post-events",
+      "arch": "-",
+      "conc": 10,
+      "reps": 3,
+      "rps": 386.6272865585488,
+      "p50_ms": 20.355521000000003,
+      "p95_ms": 64.389369,
+      "p99_ms": 95.074601,
+      "error_rate": 0.0,
+      "api_cpu_mean_pct": 133.2,
+      "db_cpu_mean_pct": 1.9
+    },
+    {
+      "api": "rest",
+      "scenario": "post-events",
+      "arch": "-",
+      "conc": 50,
+      "reps": 3,
+      "rps": 501.8580942076532,
+      "p50_ms": 95.97842700000001,
+      "p95_ms": 152.946665,
+      "p99_ms": 206.711029,
+      "error_rate": 0.0,
+      "api_cpu_mean_pct": 148.0,
+      "db_cpu_mean_pct": 2.1
+    },
+    {
+      "api": "rest",
+      "scenario": "top-sedes",
+      "arch": "kappa",
+      "conc": 10,
+      "reps": 3,
+      "rps": 226.20577048010708,
+      "p50_ms": 44.642638,
+      "p95_ms": 57.601141,
+      "p99_ms": 61.290903,
+      "error_rate": 0.0,
+      "api_cpu_mean_pct": 79.6,
+      "db_cpu_mean_pct": 865.1
+    },
+    {
+      "api": "rest",
+      "scenario": "top-sedes",
+      "arch": "kappa",
+      "conc": 50,
+      "reps": 3,
+      "rps": 224.70235982643223,
+      "p50_ms": 222.851269,
+      "p95_ms": 254.528137,
+      "p99_ms": 265.854301,
+      "error_rate": 0.0,
+      "api_cpu_mean_pct": 92.9,
+      "db_cpu_mean_pct": 869.6
+    },
+    {
+      "api": "rest",
+      "scenario": "top-sedes",
+      "arch": "lambda",
+      "conc": 10,
+      "reps": 3,
+      "rps": 69.1787183913917,
+      "p50_ms": 145.754595,
+      "p95_ms": 176.050459,
+      "p99_ms": 189.440142,
+      "error_rate": 0.0,
+      "api_cpu_mean_pct": 45.1,
+      "db_cpu_mean_pct": 938.3
+    },
+    {
+      "api": "rest",
+      "scenario": "top-sedes",
+      "arch": "lambda",
+      "conc": 50,
+      "reps": 3,
+      "rps": 68.19703504345752,
+      "p50_ms": 726.234394,
+      "p95_ms": 818.8897969999999,
+      "p99_ms": 870.71644,
+      "error_rate": 0.0,
+      "api_cpu_mean_pct": 50.4,
+      "db_cpu_mean_pct": 973.8
+    }
+  ]
+}

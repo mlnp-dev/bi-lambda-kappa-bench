@@ -18,6 +18,7 @@ from psycopg import sql
 from lkbench import db
 from lkbench.config import Settings, settings
 from lkbench.kappa_arch.processor import Processor, Stats, latest_version, view_table
+from lkbench.stream import print_stats
 
 log = logging.getLogger("kappa")
 
@@ -42,6 +43,7 @@ def replay(s: Settings, batch_size: int = 5000) -> tuple[int, Stats]:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--to", type=int, help="solo promover esta versión existente, sin replay")
+    ap.add_argument("--json", action="store_true", help="imprimir las estadísticas en JSON")
     a = ap.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(message)s")
     s = settings()
@@ -53,6 +55,8 @@ def main() -> None:
     v, st = replay(s)
     log.info("replay v%d: %d eventos en %.1f s (%.0f ev/s); kappa_serving -> %s",
              v, st.read, st.seconds, st.throughput, view_table(v))
+    if a.json:
+        print_stats(st)
 
 
 if __name__ == "__main__":

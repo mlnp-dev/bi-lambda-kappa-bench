@@ -17,6 +17,7 @@ class Settings:
     kafka_bootstrap: str
     topic: str
     lambda_block: int = 1000   # bloque de offsets de la speed layer; fijo durante la vida del topic
+    track_latency: bool = False   # registrar la latencia de extremo a extremo por evento (benchmark)
 
     @property
     def dsn(self) -> str:
@@ -39,4 +40,5 @@ def settings() -> Settings:
         kafka_bootstrap=e.get("KAFKA_BOOTSTRAP", "localhost:19092"),
         topic=e.get("TOPIC", "marcaciones"),
         lambda_block=int(e.get("LAMBDA_BLOCK_SIZE", "1000")),
+        track_latency=e.get("TRACK_LATENCY", "").lower() in ("1", "true"),
     )

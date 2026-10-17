@@ -24,7 +24,7 @@ from lkbench import db
 from lkbench.config import Settings, settings
 from lkbench.lambda_arch.master_sink import NAME as MASTER
 from lkbench.lambda_arch.speed_layer import cutoffs
-from lkbench.stream import stored_offsets
+from lkbench.stream import print_stats, stored_offsets
 
 log = logging.getLogger("batch")
 
@@ -92,6 +92,7 @@ def run_batch(s: Settings) -> BatchStats:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--every", type=float, help="repetir cada N segundos (por defecto, una sola vez)")
+    ap.add_argument("--json", action="store_true", help="imprimir las estadísticas en JSON")
     a = ap.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(message)s")
     s = settings()
@@ -100,6 +101,8 @@ def main() -> None:
             st = run_batch(s)
             log.info("batch -> %s: %d eventos, %d filas, cutoff %s, %.2f s",
                      st.table, st.events, st.rows, st.cutoff, st.seconds)
+            if a.json:
+                print_stats(st)
             if a.every is None:
                 break
             time.sleep(a.every)

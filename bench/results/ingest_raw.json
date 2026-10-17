@@ -1,0 +1,811 @@
+{
+  "params": {
+    "reps": 3,
+    "rate": 2000,
+    "seconds": 30,
+    "warmup_s": 5,
+    "batch_every_s": 15,
+    "topic": "marcaciones",
+    "events_in_topic": 218841
+  },
+  "environment": {
+    "host_os": "Windows-10-10.0.26100-SP0",
+    "host_cpu": "AMD Ryzen 7 5700U with Radeon Graphics",
+    "host_ram_gb": 15.4,
+    "docker": "27.3.1",
+    "docker_vm": "16 CPU, 8000532480 bytes, 6.18.54.1-microsoft-standard-WSL2",
+    "postgres": "PostgreSQL 16.4 (Debian 16.4-1.pgdg120+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit",
+    "redpanda": [
+      "Version:     v24.2.7"
+    ],
+    "app_python": "3.11.10 psycopg 3.3.6 confluent-kafka 2 fastapi 0.143.3 strawberry 0.335.0 uvicorn 0.54.0"
+  },
+  "complexity": {
+    "shared_loc": 277,
+    "shared_files": [
+      "stream.py",
+      "events.py",
+      "kafka.py",
+      "db.py",
+      "config.py"
+    ],
+    "kappa": {
+      "loc": 119,
+      "files": [
+        "__init__.py",
+        "processor.py",
+        "promote.py"
+      ],
+      "services": [
+        "kappa"
+      ]
+    },
+    "lambda": {
+      "loc": 173,
+      "files": [
+        "__init__.py",
+        "batch_layer.py",
+        "master_sink.py",
+        "speed_layer.py"
+      ],
+      "services": [
+        "lambda-batch",
+        "lambda-master",
+        "lambda-speed"
+      ]
+    }
+  },
+  "runs": [
+    {
+      "arch": "kappa",
+      "rep": 1,
+      "kind": "throughput",
+      "events_in_topic": 218841,
+      "read": 218841,
+      "seconds": 6.8339385110002695,
+      "throughput": 32022.67618412749,
+      "resources": {
+        "lkbench-db-1": {
+          "cpu_mean_pct": 29.7,
+          "cpu_max_pct": 48.4,
+          "mem_max_mib": 206.9,
+          "samples": 4
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 6.2,
+          "cpu_max_pct": 15.0,
+          "mem_max_mib": 262.4,
+          "samples": 4
+        },
+        "lkb-tp-kappa-1": {
+          "cpu_mean_pct": 62.5,
+          "cpu_max_pct": 69.4,
+          "mem_max_mib": 104.2,
+          "samples": 3
+        }
+      },
+      "reprocess": {
+        "what": "replay completo a v2",
+        "seconds": 6.489758207000705,
+        "read": 218841,
+        "resources": {
+          "lkbench-db-1": {
+            "cpu_mean_pct": 25.0,
+            "cpu_max_pct": 44.7,
+            "mem_max_mib": 207.8,
+            "samples": 4
+          },
+          "lkb-rp-kappa-1": {
+            "cpu_mean_pct": 63.0,
+            "cpu_max_pct": 67.4,
+            "mem_max_mib": 104.0,
+            "samples": 3
+          }
+        }
+      },
+      "consistency": {
+        "kappa_serving_vs_csv": true,
+        "rows": 37731
+      },
+      "objects": [
+        "kappa_seen_v1",
+        "kappa_seen_v2",
+        "kappa_serving",
+        "kappa_view_v1",
+        "kappa_view_v2",
+        "consumer_offsets"
+      ]
+    },
+    {
+      "arch": "kappa",
+      "rep": 1,
+      "kind": "latency",
+      "rate": 2000,
+      "events": 60000,
+      "warmup_s": 5,
+      "produce_seconds": 31.800200939178467,
+      "drain_after_produce_s": 0.5823707580566406,
+      "resources": {
+        "lkb-lat-kappa-v1-1": {
+          "cpu_mean_pct": 9.9,
+          "cpu_max_pct": 15.6,
+          "mem_max_mib": 29.4,
+          "samples": 16
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 5.3,
+          "cpu_max_pct": 13.5,
+          "mem_max_mib": 206.3,
+          "samples": 16
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 25.4,
+          "cpu_max_pct": 50.7,
+          "mem_max_mib": 263.4,
+          "samples": 16
+        }
+      },
+      "latency_ms": {
+        "kappa_v1": {
+          "n": 49993,
+          "mean": "308.8158306762946813",
+          "p50": 309.711,
+          "p95": 550.3034,
+          "p99": 577.16072,
+          "max": "611.690000"
+        }
+      }
+    },
+    {
+      "arch": "lambda",
+      "rep": 1,
+      "kind": "throughput",
+      "events_in_topic": 218841,
+      "read": 218841,
+      "seconds": 9.461989879608154,
+      "throughput": 23128.433108096157,
+      "components": {
+        "master_sink": {
+          "seconds": 7.523148823000156,
+          "read": 218841
+        },
+        "speed_layer": {
+          "seconds": 9.44770018700001,
+          "read": 218841
+        }
+      },
+      "resources": {
+        "lkbench-db-1": {
+          "cpu_mean_pct": 65.5,
+          "cpu_max_pct": 108.6,
+          "mem_max_mib": 223.2,
+          "samples": 6
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 4.8,
+          "cpu_max_pct": 13.2,
+          "mem_max_mib": 264.6,
+          "samples": 6
+        },
+        "lkb-tp-master_sink-1": {
+          "cpu_mean_pct": 70.1,
+          "cpu_max_pct": 87.0,
+          "mem_max_mib": 111.0,
+          "samples": 4
+        },
+        "lkb-tp-speed_layer-1": {
+          "cpu_mean_pct": 49.1,
+          "cpu_max_pct": 80.7,
+          "mem_max_mib": 106.2,
+          "samples": 5
+        }
+      },
+      "reprocess": {
+        "what": "recálculo batch completo",
+        "seconds": 0.5235730049998892,
+        "events": 217000,
+        "resources": {
+          "lkbench-db-1": {
+            "cpu_mean_pct": 14.4,
+            "cpu_max_pct": 14.4,
+            "mem_max_mib": 201.6,
+            "samples": 1
+          }
+        }
+      },
+      "consistency": {
+        "lambda_serving_vs_master": true,
+        "master_vs_csv": true,
+        "rows": 37731
+      },
+      "objects": [
+        "batch_active",
+        "batch_view_a",
+        "batch_view_b",
+        "lambda_cutoff",
+        "lambda_serving",
+        "master_events",
+        "speed_seen",
+        "speed_view",
+        "consumer_offsets"
+      ]
+    },
+    {
+      "arch": "lambda",
+      "rep": 1,
+      "kind": "latency",
+      "rate": 2000,
+      "events": 60000,
+      "warmup_s": 5,
+      "produce_seconds": 31.803784370422363,
+      "drain_after_produce_s": 0.06810355186462402,
+      "resources": {
+        "lkb-lat-batch-1": {
+          "cpu_mean_pct": 0.1,
+          "cpu_max_pct": 1.0,
+          "mem_max_mib": 25.1,
+          "samples": 16
+        },
+        "lkb-lat-lambda-speed-1": {
+          "cpu_mean_pct": 10.3,
+          "cpu_max_pct": 16.4,
+          "mem_max_mib": 29.2,
+          "samples": 16
+        },
+        "lkb-lat-lambda-master-1": {
+          "cpu_mean_pct": 10.1,
+          "cpu_max_pct": 16.3,
+          "mem_max_mib": 29.1,
+          "samples": 16
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 11.4,
+          "cpu_max_pct": 22.7,
+          "mem_max_mib": 217.6,
+          "samples": 16
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 29.8,
+          "cpu_max_pct": 45.6,
+          "mem_max_mib": 276.9,
+          "samples": 16
+        }
+      },
+      "batch": {
+        "every_s": 15,
+        "runs": 3,
+        "seconds_median": 0.07821217300079297
+      },
+      "latency_ms": {
+        "lambda_master": {
+          "n": 49994,
+          "mean": "310.7453752050246030",
+          "p50": 310.3825,
+          "p95": 554.22835,
+          "p99": 587.205,
+          "max": "654.913000"
+        },
+        "lambda_speed": {
+          "n": 49994,
+          "mean": "331.1620676481177741",
+          "p50": 330.7745,
+          "p95": 581.03535,
+          "p99": 622.1770700000001,
+          "max": "680.717000"
+        }
+      }
+    },
+    {
+      "arch": "lambda",
+      "rep": 2,
+      "kind": "throughput",
+      "events_in_topic": 218841,
+      "read": 218841,
+      "seconds": 9.719780921936035,
+      "throughput": 22515.013636378353,
+      "components": {
+        "master_sink": {
+          "seconds": 7.603986113000246,
+          "read": 218841
+        },
+        "speed_layer": {
+          "seconds": 9.716611259999809,
+          "read": 218841
+        }
+      },
+      "resources": {
+        "lkbench-db-1": {
+          "cpu_mean_pct": 63.7,
+          "cpu_max_pct": 103.8,
+          "mem_max_mib": 225.0,
+          "samples": 6
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 4.1,
+          "cpu_max_pct": 10.8,
+          "mem_max_mib": 264.4,
+          "samples": 6
+        },
+        "lkb-tp-speed_layer-2": {
+          "cpu_mean_pct": 53.5,
+          "cpu_max_pct": 88.1,
+          "mem_max_mib": 108.2,
+          "samples": 5
+        },
+        "lkb-tp-master_sink-2": {
+          "cpu_mean_pct": 66.0,
+          "cpu_max_pct": 87.5,
+          "mem_max_mib": 108.7,
+          "samples": 4
+        }
+      },
+      "reprocess": {
+        "what": "recálculo batch completo",
+        "seconds": 0.6670668639999349,
+        "events": 217000,
+        "resources": {
+          "lkbench-db-1": {
+            "cpu_mean_pct": 16.2,
+            "cpu_max_pct": 16.2,
+            "mem_max_mib": 205.1,
+            "samples": 1
+          }
+        }
+      },
+      "consistency": {
+        "lambda_serving_vs_master": true,
+        "master_vs_csv": true,
+        "rows": 37731
+      },
+      "objects": [
+        "batch_active",
+        "batch_view_a",
+        "batch_view_b",
+        "lambda_cutoff",
+        "lambda_serving",
+        "master_events",
+        "speed_seen",
+        "speed_view",
+        "consumer_offsets"
+      ]
+    },
+    {
+      "arch": "lambda",
+      "rep": 2,
+      "kind": "latency",
+      "rate": 2000,
+      "events": 60000,
+      "warmup_s": 5,
+      "produce_seconds": 31.711827754974365,
+      "drain_after_produce_s": 0.08217597007751465,
+      "resources": {
+        "lkb-lat-batch-2": {
+          "cpu_mean_pct": 3.4,
+          "cpu_max_pct": 52.1,
+          "mem_max_mib": 25.8,
+          "samples": 16
+        },
+        "lkb-lat-lambda-speed-2": {
+          "cpu_mean_pct": 9.6,
+          "cpu_max_pct": 13.6,
+          "mem_max_mib": 29.3,
+          "samples": 16
+        },
+        "lkb-lat-lambda-master-2": {
+          "cpu_mean_pct": 10.0,
+          "cpu_max_pct": 15.1,
+          "mem_max_mib": 29.2,
+          "samples": 16
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 10.0,
+          "cpu_max_pct": 17.9,
+          "mem_max_mib": 219.1,
+          "samples": 16
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 29.4,
+          "cpu_max_pct": 50.9,
+          "mem_max_mib": 275.8,
+          "samples": 16
+        }
+      },
+      "batch": {
+        "every_s": 15,
+        "runs": 3,
+        "seconds_median": 0.08024327499970241
+      },
+      "latency_ms": {
+        "lambda_master": {
+          "n": 49991,
+          "mean": "312.3011252225400572",
+          "p50": 312.014,
+          "p95": 556.7375,
+          "p99": 589.121,
+          "max": "642.199000"
+        },
+        "lambda_speed": {
+          "n": 49991,
+          "mean": "333.7828920405673021",
+          "p50": 333.804,
+          "p95": 585.097,
+          "p99": 624.3618999999998,
+          "max": "673.271000"
+        }
+      }
+    },
+    {
+      "arch": "kappa",
+      "rep": 2,
+      "kind": "throughput",
+      "events_in_topic": 218841,
+      "read": 218841,
+      "seconds": 6.214655677000337,
+      "throughput": 35213.69668313293,
+      "resources": {
+        "lkbench-db-1": {
+          "cpu_mean_pct": 32.1,
+          "cpu_max_pct": 54.8,
+          "mem_max_mib": 208.8,
+          "samples": 4
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 5.3,
+          "cpu_max_pct": 10.7,
+          "mem_max_mib": 264.5,
+          "samples": 4
+        },
+        "lkb-tp-kappa-2": {
+          "cpu_mean_pct": 66.1,
+          "cpu_max_pct": 77.0,
+          "mem_max_mib": 99.3,
+          "samples": 3
+        }
+      },
+      "reprocess": {
+        "what": "replay completo a v2",
+        "seconds": 6.1848668789998555,
+        "read": 218841,
+        "resources": {
+          "lkbench-db-1": {
+            "cpu_mean_pct": 26.9,
+            "cpu_max_pct": 46.8,
+            "mem_max_mib": 211.4,
+            "samples": 4
+          },
+          "lkb-rp-kappa-2": {
+            "cpu_mean_pct": 63.6,
+            "cpu_max_pct": 69.3,
+            "mem_max_mib": 101.6,
+            "samples": 3
+          }
+        }
+      },
+      "consistency": {
+        "kappa_serving_vs_csv": true,
+        "rows": 37731
+      },
+      "objects": [
+        "kappa_seen_v1",
+        "kappa_seen_v2",
+        "kappa_serving",
+        "kappa_view_v1",
+        "kappa_view_v2",
+        "consumer_offsets"
+      ]
+    },
+    {
+      "arch": "kappa",
+      "rep": 2,
+      "kind": "latency",
+      "rate": 2000,
+      "events": 60000,
+      "warmup_s": 5,
+      "produce_seconds": 31.447394132614136,
+      "drain_after_produce_s": 0.038449764251708984,
+      "resources": {
+        "lkb-lat-kappa-v1-2": {
+          "cpu_mean_pct": 10.7,
+          "cpu_max_pct": 20.4,
+          "mem_max_mib": 29.0,
+          "samples": 16
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 5.0,
+          "cpu_max_pct": 12.7,
+          "mem_max_mib": 211.1,
+          "samples": 16
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 25.7,
+          "cpu_max_pct": 58.7,
+          "mem_max_mib": 264.5,
+          "samples": 16
+        }
+      },
+      "latency_ms": {
+        "kappa_v1": {
+          "n": 49992,
+          "mean": "314.5740345255240839",
+          "p50": 314.75149999999996,
+          "p95": 558.65745,
+          "p99": 597.73509,
+          "max": "646.047000"
+        }
+      }
+    },
+    {
+      "arch": "kappa",
+      "rep": 3,
+      "kind": "throughput",
+      "events_in_topic": 218841,
+      "read": 218841,
+      "seconds": 6.673370458000136,
+      "throughput": 32793.17421043967,
+      "resources": {
+        "lkbench-db-1": {
+          "cpu_mean_pct": 38.0,
+          "cpu_max_pct": 49.2,
+          "mem_max_mib": 212.0,
+          "samples": 4
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 6.2,
+          "cpu_max_pct": 14.4,
+          "mem_max_mib": 263.8,
+          "samples": 4
+        },
+        "lkb-tp-kappa-3": {
+          "cpu_mean_pct": 66.2,
+          "cpu_max_pct": 76.1,
+          "mem_max_mib": 103.4,
+          "samples": 3
+        }
+      },
+      "reprocess": {
+        "what": "replay completo a v2",
+        "seconds": 8.392321872999673,
+        "read": 218841,
+        "resources": {
+          "lkbench-db-1": {
+            "cpu_mean_pct": 33.2,
+            "cpu_max_pct": 47.0,
+            "mem_max_mib": 214.7,
+            "samples": 5
+          },
+          "lkb-rp-kappa-3": {
+            "cpu_mean_pct": 58.0,
+            "cpu_max_pct": 64.7,
+            "mem_max_mib": 101.2,
+            "samples": 4
+          }
+        }
+      },
+      "consistency": {
+        "kappa_serving_vs_csv": true,
+        "rows": 37731
+      },
+      "objects": [
+        "kappa_seen_v1",
+        "kappa_seen_v2",
+        "kappa_serving",
+        "kappa_view_v1",
+        "kappa_view_v2",
+        "consumer_offsets"
+      ]
+    },
+    {
+      "arch": "kappa",
+      "rep": 3,
+      "kind": "latency",
+      "rate": 2000,
+      "events": 60000,
+      "warmup_s": 5,
+      "produce_seconds": 31.50213313102722,
+      "drain_after_produce_s": 0.045294761657714844,
+      "resources": {
+        "lkb-lat-kappa-v1-3": {
+          "cpu_mean_pct": 10.0,
+          "cpu_max_pct": 14.1,
+          "mem_max_mib": 29.4,
+          "samples": 16
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 4.3,
+          "cpu_max_pct": 10.2,
+          "mem_max_mib": 214.1,
+          "samples": 16
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 23.1,
+          "cpu_max_pct": 37.5,
+          "mem_max_mib": 264.8,
+          "samples": 16
+        }
+      },
+      "latency_ms": {
+        "kappa_v1": {
+          "n": 49994,
+          "mean": "305.4544970596471577",
+          "p50": 306.8555,
+          "p95": 545.7597,
+          "p99": 569.4602100000001,
+          "max": "604.713000"
+        }
+      }
+    },
+    {
+      "arch": "lambda",
+      "rep": 3,
+      "kind": "throughput",
+      "events_in_topic": 218841,
+      "read": 218841,
+      "seconds": 9.530080556869507,
+      "throughput": 22963.184696508597,
+      "components": {
+        "master_sink": {
+          "seconds": 8.028422051999769,
+          "read": 218841
+        },
+        "speed_layer": {
+          "seconds": 9.53311493900037,
+          "read": 218841
+        }
+      },
+      "resources": {
+        "lkbench-db-1": {
+          "cpu_mean_pct": 70.6,
+          "cpu_max_pct": 105.6,
+          "mem_max_mib": 235.9,
+          "samples": 6
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 2.4,
+          "cpu_max_pct": 9.9,
+          "mem_max_mib": 264.5,
+          "samples": 6
+        },
+        "lkb-tp-master_sink-3": {
+          "cpu_mean_pct": 67.3,
+          "cpu_max_pct": 86.6,
+          "mem_max_mib": 105.6,
+          "samples": 4
+        },
+        "lkb-tp-speed_layer-3": {
+          "cpu_mean_pct": 55.4,
+          "cpu_max_pct": 86.2,
+          "mem_max_mib": 105.9,
+          "samples": 5
+        }
+      },
+      "reprocess": {
+        "what": "recálculo batch completo",
+        "seconds": 0.6067359500002567,
+        "events": 217000,
+        "resources": {
+          "lkbench-db-1": {
+            "cpu_mean_pct": 22.9,
+            "cpu_max_pct": 22.9,
+            "mem_max_mib": 215.1,
+            "samples": 1
+          }
+        }
+      },
+      "consistency": {
+        "lambda_serving_vs_master": true,
+        "master_vs_csv": true,
+        "rows": 37731
+      },
+      "objects": [
+        "batch_active",
+        "batch_view_a",
+        "batch_view_b",
+        "lambda_cutoff",
+        "lambda_serving",
+        "master_events",
+        "speed_seen",
+        "speed_view",
+        "consumer_offsets"
+      ]
+    },
+    {
+      "arch": "lambda",
+      "rep": 3,
+      "kind": "latency",
+      "rate": 2000,
+      "events": 60000,
+      "warmup_s": 5,
+      "produce_seconds": 31.563478469848633,
+      "drain_after_produce_s": 0.6035854816436768,
+      "resources": {
+        "lkb-lat-batch-3": {
+          "cpu_mean_pct": 0.1,
+          "cpu_max_pct": 1.0,
+          "mem_max_mib": 25.3,
+          "samples": 16
+        },
+        "lkb-lat-lambda-speed-3": {
+          "cpu_mean_pct": 9.6,
+          "cpu_max_pct": 16.2,
+          "mem_max_mib": 28.9,
+          "samples": 16
+        },
+        "lkb-lat-lambda-master-3": {
+          "cpu_mean_pct": 9.3,
+          "cpu_max_pct": 13.0,
+          "mem_max_mib": 29.3,
+          "samples": 16
+        },
+        "lkbench-db-1": {
+          "cpu_mean_pct": 9.6,
+          "cpu_max_pct": 23.9,
+          "mem_max_mib": 230.6,
+          "samples": 16
+        },
+        "lkbench-redpanda-1": {
+          "cpu_mean_pct": 26.4,
+          "cpu_max_pct": 48.4,
+          "mem_max_mib": 276.2,
+          "samples": 16
+        }
+      },
+      "batch": {
+        "every_s": 15,
+        "runs": 3,
+        "seconds_median": 0.12293431400030386
+      },
+      "latency_ms": {
+        "lambda_master": {
+          "n": 49995,
+          "mean": "309.0029631363136314",
+          "p50": 308.022,
+          "p95": 552.9033000000001,
+          "p99": 595.56106,
+          "max": "756.003000"
+        },
+        "lambda_speed": {
+          "n": 49995,
+          "mean": "324.9983786178617862",
+          "p50": 323.849,
+          "p95": 572.9803,
+          "p99": 611.0060599999999,
+          "max": "670.774000"
+        }
+      }
+    }
+  ],
+  "summary": [
+    {
+      "arch": "kappa",
+      "reps": 3,
+      "throughput_ev_s": 32793.17421043967,
+      "ingest_seconds": 6.673370458000136,
+      "reprocess_seconds": 6.489758207000705,
+      "latency_p50_ms": 309.711,
+      "latency_p95_ms": 550.3034,
+      "latency_p99_ms": 577.16072,
+      "batch_seconds": null,
+      "batch_every_s": null,
+      "app_cpu_mean_pct": 66.1,
+      "app_mem_max_mib": 103.4,
+      "db_cpu_mean_pct": 32.1,
+      "consistent": true
+    },
+    {
+      "arch": "lambda",
+      "reps": 3,
+      "throughput_ev_s": 22963.184696508597,
+      "ingest_seconds": 9.530080556869507,
+      "reprocess_seconds": 0.6067359500002567,
+      "latency_p50_ms": 330.7745,
+      "latency_p95_ms": 581.03535,
+      "latency_p99_ms": 622.1770700000001,
+      "batch_seconds": 0.08024327499970241,
+      "batch_every_s": 15,
+      "app_cpu_mean_pct": 119.5,
+      "app_mem_max_mib": 216.9,
+      "db_cpu_mean_pct": 65.5,
+      "consistent": true
+    }
+  ]
+}
