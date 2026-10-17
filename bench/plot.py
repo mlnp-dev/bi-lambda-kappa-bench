@@ -34,11 +34,10 @@ def load(name: str) -> dict:
 
 
 def fmt(x, nd: int = 0) -> str:
-    """Número con espacio fino como separador de miles (estilo del informe)."""
+    """Número en formato del informe: espacio fino para miles y coma decimal (1\\,234,5)."""
     if x is None:
         return "--"
-    s = f"{x:,.{nd}f}".replace(",", "\\,")
-    return s
+    return f"{x:,.{nd}f}".replace(",", " ").replace(".", ",").replace(" ", "\\,")
 
 
 def tex_escape(s: str) -> str:
