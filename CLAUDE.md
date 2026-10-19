@@ -32,7 +32,7 @@ El docente pide:
 
 ## 2. Caso de uso
 
-Ingesta de **marcaciones de asistencia** reales del personal del Ministerio Público, Distrito Fiscal de Puno, **2019 a junio de 2021**, **anonimizadas**: 218 841 eventos (2019: 184 403; 2020: 29 426; 2021: 5 012), 460 personas, 16 sedes. 2020-2021 tienen menos registros (pandemia, trabajo remoto): se documenta en el informe.
+Ingesta de **marcaciones de asistencia** reales del personal del Ministerio Público, Distrito Fiscal de Puno, **2019 a junio de 2021**, **anonimizadas**: 218 841 eventos (2019: 184 403; 2020: 29 426; 2021: 5 012), 460 personas, 16 sedes. 2020-2021 tienen menos registros (pandemia, trabajo remoto y uso de otros medios de registro de asistencia para evitar el contagio): se documenta en el informe.
 
 Fuentes (nunca se versionan, están en `.gitignore`):
 - `PERSONAL AL 12 DE AGOSTO DE 2026.xlsx`: padrón de personal (DNI, domicilio, sueldo, etc.).
