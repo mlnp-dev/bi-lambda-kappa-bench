@@ -6,7 +6,7 @@ Distrito Fiscal de Puno (2019 a junio de 2021: 218 841 eventos, 460 personas, 16
 En 2020-2021 hay muchos menos registros: además del trabajo remoto por la pandemia, para evitar el
 contagio se usaron otros medios de registro de asistencia que no están en esta fuente.
 
-Business Intelligence, maestría (FINESI). Actividad N° 1: Arquitecturas.
+Maestría en Business Intelligence and Data Analytics. Actividad N° 1: Arquitecturas.
 
 > Informe (2 páginas, IEEEtran): [`report/informe.pdf`](report/informe.pdf). Resultados crudos: [`bench/results/`](bench/results/).
 
