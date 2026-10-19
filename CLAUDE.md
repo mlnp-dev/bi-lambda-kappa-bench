@@ -18,7 +18,7 @@
 
 ## 1. Contexto de la tarea
 
-Curso: Business Intelligence (maestría, FINESI). Actividad N° 1 — Arquitecturas.
+Maestría en Business Intelligence and Data Analytics. Actividad N° 1 — Arquitecturas.
 
 El docente pide:
 1. Levantar **localmente** un servidor de base de datos y una API (opcional: exponerla en la nube o con un túnel).
