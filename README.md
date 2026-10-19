@@ -3,6 +3,8 @@
 Benchmark de dos arquitecturas de ingesta (**Lambda** y **Kappa**) y dos arquitecturas de API
 (**REST** y **GraphQL**) sobre marcaciones de asistencia **anonimizadas** del Ministerio Público,
 Distrito Fiscal de Puno (2019 a junio de 2021: 218 841 eventos, 460 personas, 16 sedes).
+En 2020-2021 hay muchos menos registros: además del trabajo remoto por la pandemia, para evitar el
+contagio se usaron otros medios de registro de asistencia que no están en esta fuente.
 
 Business Intelligence, maestría (FINESI). Actividad N° 1: Arquitecturas.
 

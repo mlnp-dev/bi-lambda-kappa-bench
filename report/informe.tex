@@ -34,7 +34,8 @@ real y concluir cuál conviene y en qué condiciones.
 
 \textbf{Caso de uso.} Marcaciones (entrada, salida y refrigerio) del personal del Ministerio Público,
 Distrito Fiscal de Puno, de 2019 a junio de 2021: \NumEvents{} eventos, 460 personas y 16 sedes. Los
-años 2020--2021 tienen menos registros por la pandemia. El DNI se reemplaza por un HMAC-SHA256 con
+años 2020--2021 tienen muchos menos registros: además del trabajo remoto por la pandemia, para
+evitar el contagio se usaron otros medios de registro de asistencia que no están en esta fuente. El DNI se reemplaza por un HMAC-SHA256 con
 sal privada; no se publican datos personales. Se considera tardanza toda entrada posterior a las
 08:00 (supuesto). El agregado es, por sede y hora, el número de marcaciones y de tardanzas.
 
@@ -99,7 +100,8 @@ cuando el cliente ya pide exactamente lo que el endpoint REST devuelve.
 \emph{Amenazas a la validez}: un solo nodo y una VM compartida (Redpanda, PostgreSQL, procesadores y
 cliente compiten por CPU); Python como cuello de botella en procesadores y APIs; el volumen real
 (\NumEvents{} eventos) es pequeño, por eso la carga constante reemite las mismas marcaciones con
-\texttt{produced\_at} actual; y la regla de tardanza es un supuesto.
+\texttt{produced\_at} actual; las marcaciones de 2020--2021 no reflejan toda la asistencia real,
+porque parte se registró por otros medios; y la regla de tardanza es un supuesto.
 
 \section{Conclusión}
 Para este caso (volumen moderado, una sola lógica de agregación y necesidad de datos frescos)
